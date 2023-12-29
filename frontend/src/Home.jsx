@@ -35,8 +35,10 @@ function Home() {
                                 <td> {book.amountCollected}</td>
                                 <td> {book.volAmount}</td>
                                 <td>
-                                    <Link to={`/read/${book.id}`}>Read</Link>
-                                    <Link to={`/edit/${book.id}`}>Edit</Link>
+                                    <Link className="btn btn-outline-dark "
+ role="button" to={`/read/${book.id}`}>Read</Link>
+                                    <Link className="btn btn-outline-dark "
+ role="button" to={`/edit/${book.id}`}>Edit</Link>
                                     <button> Delete</button>
                                 </td>
                             </tr>
