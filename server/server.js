@@ -22,6 +22,17 @@ app.get('/',(req, res)=>{
     })
 })
 
+
+app.get('/read/:id',(req, res)=>{
+    const sql = "SELECT * FROM book WHERE id = ?";
+    const id = req.params.id;
+
+    db.query(sql,[id], (err, result)=>{
+        if(err) return res.json({Message:"error inside server"});
+        return res.json(result)
+    })
+})
+
 app.post('/book',(req, res)=>{
     const sql = "INSERT INTO book (`name`,`amountCollected`,`volAmount`) VALUES (?)";
     const values = [

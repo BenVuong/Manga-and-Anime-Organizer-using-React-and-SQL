@@ -35,6 +35,7 @@ function Home() {
                                 <td> {book.amountCollected}</td>
                                 <td> {book.volAmount}</td>
                                 <td>
+                                    <Link to={`/read/${book.id}`}>Read</Link>
                                     <button>Edit</button>
                                     <button> Delete</button>
                                 </td>

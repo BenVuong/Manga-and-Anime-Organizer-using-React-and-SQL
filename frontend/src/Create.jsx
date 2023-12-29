@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 function Create(){
     const [values, setValues] = useState({
         title: '',
@@ -39,6 +39,7 @@ function Create(){
                         onChange={e => setValues({...values, totalVolumes: e.target.value})}/>
                     </div>
                     <button className="btn btn-success"> Submit</button>
+                    <Link to ="/" className='btn btn-success'> Back</Link>
                 </form>
             </div>
         </div>
