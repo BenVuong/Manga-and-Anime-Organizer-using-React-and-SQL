@@ -36,7 +36,7 @@ function Home() {
                                 <td> {book.volAmount}</td>
                                 <td>
                                     <Link to={`/read/${book.id}`}>Read</Link>
-                                    <button>Edit</button>
+                                    <Link to={`/edit/${book.id}`}>Edit</Link>
                                     <button> Delete</button>
                                 </td>
                             </tr>

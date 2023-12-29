@@ -16,10 +16,10 @@ function Read() {
     return(
         <div>
             <h2>Manga details</h2>
-            <h2>ID: {book.id}</h2>
-            <h2>Manga Title: {book.name}</h2>
-            <h2>Amount of volumes collected: {book.amountCollected}</h2>
-            <h2>Total Amount of Volumes: {book.volAmount}</h2>
+            <h3>ID: {book.id}</h3>
+            <h3>Manga Title: {book.name}</h3>
+            <h3>Amount of volumes collected: {book.amountCollected}</h3>
+            <h3>Total Amount of Volumes: {book.volAmount}</h3>
             <Link to ="/" className='btn btn-success'> Back</Link>
             <button> Edit</button>
         </div>

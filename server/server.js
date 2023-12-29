@@ -47,6 +47,17 @@ app.post('/book',(req, res)=>{
     })
 })
 
+app.put('/edit/:id', (req, res)=>{
+    const sql = "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=? WHERE id=?"
+    const id = req.params.id;
+    db.query(sql, [req.body.name, req.body.amountCollected, req.body.volAmount, id], (err, result)=>
+    {
+        if(err) return res.json({Message: "Error inside server"});
+        return res.json(result);
+    })
+
+})
+
 app.listen(8081, ()=>{
     console.log("listeing");
 })
