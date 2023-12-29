@@ -42,13 +42,13 @@ app.post('/book',(req, res)=>{
     ]
     db.query(sql, [values], (err, result) =>{
         if(err) return res.json(err);
-        return req.json(result);
+        return res.json(result);
 
     })
 })
 
 app.put('/edit/:id', (req, res)=>{
-    const sql = "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=? WHERE id=?"
+    const sql = "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=? WHERE id=?";
     const id = req.params.id;
     db.query(sql, [req.body.name, req.body.amountCollected, req.body.volAmount, id], (err, result)=>
     {
