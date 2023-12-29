@@ -5,11 +5,11 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 function Edit(){
 
     const {id} = useParams();
-    {/*TODO: fix bug where when updating total amount of volumes goes to 0 */}
+   
     const [values, setValues] = useState({
-        title: '',
+        name: '',
         amountCollected: '',
-        totalVolumes: ''
+        volAmount: ''
     })
     const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ function Edit(){
     useEffect(()=>{
         axios.get('http://localhost:8081/read/'+id)
         .then(res => {console.log(res)
-            setValues({...values, name: res.data[0].name, amountCollected: res.data[0].amountCollected, totalVolumes: res.data[0].volAmount});
+            setValues({...values, name: res.data[0].name, amountCollected: res.data[0].amountCollected, volAmount: res.data[0].volAmount});
         })
         .catch(err=> console.log(err))
     }, [])
@@ -38,7 +38,7 @@ function Edit(){
                     <label htmlFor="">Title</label>
                     <input type="text" placeholder='Enter Title' className='form-control'
                     value={values.name}
-                    onChange={e => setValues({...values, title: e.target.value})}/>
+                    onChange={e => setValues({...values, name: e.target.value})}/>
                 </div>
                 <div className='mb-2'>
                     <label htmlFor="">Amount collected</label>
@@ -49,8 +49,8 @@ function Edit(){
                 <div className='mb-2'>
                     <label htmlFor="">Total number of volumes</label>
                     <input type="number" placeholder='Enter amount' className='form-control'
-                     value={values.totalVolumes}
-                    onChange={e => setValues({...values, totalVolumes: e.target.value})}/>
+                     value={values.volAmount}
+                    onChange={e => setValues({...values, volAmount: e.target.value})}/>
                 </div>
                 <button className="btn btn-success"> Update</button>
                 <Link to ="/" className='btn btn-success'> Back</Link>
