@@ -5,7 +5,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 function Edit(){
 
     const {id} = useParams();
-
+    {/*TODO: fix bug where when updating total amount of volumes goes to 0 */}
     const [values, setValues] = useState({
         title: '',
         amountCollected: '',
