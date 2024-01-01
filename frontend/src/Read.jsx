@@ -14,7 +14,7 @@ function Read() {
         .catch(err=> console.log(err))
     }, [])
     return(
-        <div>
+        <div className='p-3 mb-2 bg-secondary text-white'>
             <h2>Manga details</h2>
             <h3>ID: {book.id}</h3>
             <h3>Manga Title: {book.name}</h3>

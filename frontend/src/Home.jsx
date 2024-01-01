@@ -8,20 +8,30 @@ function Home() {
         .then(res => setData(res.data))
         .catch(err=> console.log(err));
     },[])
+
+    const handleDelete = (id)=>{
+        axios.delete('http://localhost:8081/delete/' + id)
+        .then(res => {
+            window.location.reload();
+        })
+        .catch(err=> console.log(err));
+
+    }
+
     return(
      <div>
         <h1>
             Manga Collection
         </h1>
-        <div className="d-flex justify-content">
+        <div className="d-flex justify-content  ">
             <Link to ="/create" className='btn btn-success'> Create +</Link>
         </div>
-        <div>
+        <div className="p-3 mb-2 bg-secondary text-white">
             <table>
                 <thead>
                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
+                        
+                        <th>Title</th>
                         <th>Amount Collected</th>
                         <th>Total Amount of Volumes</th>
                     </tr>
@@ -30,16 +40,16 @@ function Home() {
                     {
                         data.map((book, index)=> {
                             return <tr key={index}>
-                                <td> {book.id}</td>
+                                
                                 <td> {book.name}</td>
                                 <td> {book.amountCollected}</td>
                                 <td> {book.volAmount}</td>
                                 <td>
                                     <Link className="btn btn-outline-dark "
- role="button" to={`/read/${book.id}`}>Read</Link>
+ role="button" to={`/read/${book.id}` }>Details</Link>
                                     <Link className="btn btn-outline-dark "
  role="button" to={`/edit/${book.id}`}>Edit</Link>
-                                    <button> Delete</button>
+                                    <button onClick={() =>handleDelete(book.id)} className="btn btn-danger"> Delete</button>
                                 </td>
                             </tr>
                             
