@@ -7,7 +7,10 @@ function Create(){
         title: '',
         amountCollected: '',
         totalVolumes: '',
-        mangaPublisher: ''
+        mangaPublisher: '',
+        story: '',
+        art: '',
+        synopsis: ''
     })
     const navigate = useNavigate();
     const handleSubmit = (e)=> {
@@ -43,6 +46,21 @@ function Create(){
                         <label htmlFor="">Publisher</label>
                         <input type="text" placeholder='Enter Publisher' className='form-control'
                         onChange={e => setValues({...values, mangaPublisher: e.target.value})}/>
+                    </div>
+                    <div className='mb-2'>
+                        <label htmlFor="">Story by</label>
+                        <input type="text" placeholder='Story by' className='form-control'
+                        onChange={e => setValues({...values, story: e.target.value})}/>
+                    </div>
+                    <div className='mb-2'>
+                        <label htmlFor="">Art by</label>
+                        <input type="text" placeholder='Art by' className='form-control'
+                        onChange={e => setValues({...values, art: e.target.value})}/>
+                    </div>
+                    <div className='mb-2'>
+                        <label htmlFor="">Synopsis</label>
+                        <input type="text" placeholder='Enter Synposis' className='form-control'
+                        onChange={e => setValues({...values, synopsis: e.target.value})}/>
                     </div>
                     <button className="btn btn-success"> Submit</button>
                     <Link to ="/" className='btn btn-success'> Back</Link>

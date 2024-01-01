@@ -34,12 +34,15 @@ app.get('/read/:id',(req, res)=>{
 })
 
 app.post('/book',(req, res)=>{
-    const sql = "INSERT INTO book (`name`,`amountCollected`,`volAmount`, `publisher`) VALUES (?)";
+    const sql = "INSERT INTO book (`name`,`amountCollected`,`volAmount`, `publisher`, `story`, `art`, `synopsis`) VALUES (?)";
     const values = [
         req.body.title,
         req.body.amountCollected,
         req.body.totalVolumes,
-        req.body.mangaPublisher
+        req.body.mangaPublisher,
+        req.body.story,
+        req.body.art,
+        req.body.synopsis
     ]
     db.query(sql, [values], (err, result) =>{
         if(err) return res.json(err);
@@ -49,9 +52,17 @@ app.post('/book',(req, res)=>{
 })
 
 app.put('/edit/:id', (req, res)=>{
-    const sql = "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=?, `publisher`=? WHERE id=?";
+    const sql = "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=?, `publisher`=?, `story`=?, `art`=?, `synopsis`=?  WHERE id=?";
     const id = req.params.id;
-    db.query(sql, [req.body.name, req.body.amountCollected, req.body.volAmount, req.body.publisher, id], (err, result)=>
+    db.query(sql, [
+    req.body.name,
+    req.body.amountCollected, 
+    req.body.volAmount, 
+    req.body.publisher,
+    req.body.story,
+    req.body.art,
+    req.body.synopsis, 
+    id], (err, result)=>
     {
         if(err) return res.json({Message: "Error inside server"});
         return res.json(result);

@@ -10,7 +10,10 @@ function Edit(){
         name: '',
         amountCollected: '',
         volAmount: '',
-        publisher: ''
+        publisher: '',
+        story: '',
+        art:'',
+        synopsis: ''
     })
     const navigate = useNavigate();
 
@@ -19,14 +22,22 @@ function Edit(){
         axios.put('http://localhost:8081/edit/'+id, values)
         .then(res=> {
             console.log(res)
-            navigate('/')
+            navigate('/read/'+id)
         }).catch(err=> console.log(err));
     }
 
     useEffect(()=>{
         axios.get('http://localhost:8081/read/'+id)
         .then(res => {console.log(res)
-            setValues({...values, name: res.data[0].name, amountCollected: res.data[0].amountCollected, volAmount: res.data[0].volAmount, publisher: res.data[0].publisher});
+            setValues({...values, 
+                    name: res.data[0].name, 
+                    amountCollected: res.data[0].amountCollected, 
+                    volAmount: res.data[0].volAmount, 
+                    publisher: res.data[0].publisher,
+                    story: res.data[0].story,
+                    art: res.data[0].art,
+                    synopsis: res.data[0].synopsis
+                });
         })
         .catch(err=> console.log(err))
     }, [])
@@ -58,6 +69,24 @@ function Edit(){
                     <input type="text" placeholder='Enter Publisher' className='form-control'
                     value={values.publisher}
                     onChange={e => setValues({...values, publisher: e.target.value})}/>
+                </div>
+                <div className='mb-2'>
+                    <label htmlFor="">Story by</label>
+                    <input type="text" placeholder='Story by' className='form-control'
+                    value={values.story}
+                    onChange={e => setValues({...values, story: e.target.value})}/>
+                </div>
+                <div className='mb-2'>
+                    <label htmlFor="">Art by</label>
+                    <input type="text" placeholder='Art by' className='form-control'
+                    value={values.art}
+                    onChange={e => setValues({...values, art: e.target.value})}/>
+                </div>
+                <div className='mb-2'>
+                    <label htmlFor="">Enter Synopsis</label>
+                    <input type="text" placeholder='Enter Synopsis' className='form-control'
+                    value={values.synopsis}
+                    onChange={e => setValues({...values, synopsis: e.target.value})}/>
                 </div>
                 <button className="btn btn-success"> Update</button>
                 <Link to ="/" className='btn btn-success'> Back</Link>
