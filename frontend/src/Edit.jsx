@@ -9,7 +9,8 @@ function Edit(){
     const [values, setValues] = useState({
         name: '',
         amountCollected: '',
-        volAmount: ''
+        volAmount: '',
+        publisher: ''
     })
     const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ function Edit(){
     useEffect(()=>{
         axios.get('http://localhost:8081/read/'+id)
         .then(res => {console.log(res)
-            setValues({...values, name: res.data[0].name, amountCollected: res.data[0].amountCollected, volAmount: res.data[0].volAmount});
+            setValues({...values, name: res.data[0].name, amountCollected: res.data[0].amountCollected, volAmount: res.data[0].volAmount, publisher: res.data[0].publisher});
         })
         .catch(err=> console.log(err))
     }, [])
@@ -51,6 +52,12 @@ function Edit(){
                     <input type="number" placeholder='Enter amount' className='form-control'
                      value={values.volAmount}
                     onChange={e => setValues({...values, volAmount: e.target.value})}/>
+                </div>
+                <div className='mb-2'>
+                    <label htmlFor="">Publisher</label>
+                    <input type="text" placeholder='Enter Publisher' className='form-control'
+                    value={values.publisher}
+                    onChange={e => setValues({...values, publisher: e.target.value})}/>
                 </div>
                 <button className="btn btn-success"> Update</button>
                 <Link to ="/" className='btn btn-success'> Back</Link>

@@ -20,6 +20,7 @@ function Read() {
             <h3>Manga Title: {book.name}</h3>
             <h3>Amount of volumes collected: {book.amountCollected}</h3>
             <h3>Total Amount of Volumes: {book.volAmount}</h3>
+            <h3>Publisher: {book.publisher}</h3>
             <Link to ="/" className='btn btn-success'> Back</Link>
             <Link  className="btn btn-outline-dark "
  role="button" to={`/edit/${book.id}`}>Edit</Link>

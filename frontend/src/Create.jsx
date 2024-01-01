@@ -6,7 +6,8 @@ function Create(){
     const [values, setValues] = useState({
         title: '',
         amountCollected: '',
-        totalVolumes: ''
+        totalVolumes: '',
+        mangaPublisher: ''
     })
     const navigate = useNavigate();
     const handleSubmit = (e)=> {
@@ -37,6 +38,11 @@ function Create(){
                         <label htmlFor="">Total number of volumes</label>
                         <input type="number" placeholder='Enter amount' className='form-control'
                         onChange={e => setValues({...values, totalVolumes: e.target.value})}/>
+                    </div>
+                    <div className='mb-2'>
+                        <label htmlFor="">Publisher</label>
+                        <input type="text" placeholder='Enter Publisher' className='form-control'
+                        onChange={e => setValues({...values, mangaPublisher: e.target.value})}/>
                     </div>
                     <button className="btn btn-success"> Submit</button>
                     <Link to ="/" className='btn btn-success'> Back</Link>
