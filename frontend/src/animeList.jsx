@@ -4,7 +4,23 @@ function AnimeList() {
   const [anime, setAnime] = useState([]);
   const [newAnimeName, setNewAnimeName] = useState('');
   const [newEpsiodeCount, setNewEpisodeCount] = useState('');
+  const [newStatus, setNewStatus] = useState('')
   const [editIndex, setEditIndex] = useState(null);
+
+  const statusOptions = [
+    "Currently Watching",
+    "Completed",
+    "On-Hold",
+    "Dropped",
+    "Plan to Watch",
+  ];
+
+  const statusChangeHandler = (e) => {
+
+   
+      setNewStatus(e.target.value);
+    
+  }  
 
   useEffect(() => {
     const storedAnime = JSON.parse(localStorage.getItem('anime'));
@@ -18,12 +34,12 @@ function AnimeList() {
   }, [anime]);
 
   const handleAddAnime = () => {
-    if (newAnimeName && newEpsiodeCount) {
+    if (newAnimeName && newEpsiodeCount && newStatus) {
       if (editIndex === null) {
-        setAnime([...anime, { name: newAnimeName, episodeCount: newEpsiodeCount }]);
+        setAnime([...anime, { name: newAnimeName, episodeCount: newEpsiodeCount, stat: newStatus }]);
       } else {
         const updatedAnime = [...anime];
-        updatedAnime[editIndex] = {  name: newAnimeName, episodeCount: newEpsiodeCount };
+        updatedAnime[editIndex] = {  name: newAnimeName, episodeCount: newEpsiodeCount, stat: newStatus };
         setAnime(updatedAnime);
         setEditIndex(null);
       }
@@ -64,13 +80,24 @@ function AnimeList() {
           value={newEpsiodeCount}
           onChange={(e) => setNewEpisodeCount(e.target.value)}
         />
+        <select onChange={statusChangeHandler}>
+            <option value={""}>Select Status</option>
+            {statusOptions.map((option, index) =>
+            {
+              return(
+                <option key={index}>
+                  {option}
+                </option>
+              );
+            })}
+        </select>
         <button onClick={handleAddAnime}>{editIndex !== null ? 'Update Anime' : 'Add Anime'}</button>
       </div>
       <ul>
         {anime.map((animes, index) => (
           <li key={index}>
             
-            <span>{animes.name} - {animes.episodeCount}</span>
+            <span>{animes.name} - {animes.episodeCount} - {animes.stat}</span>
             <button onClick={() => handleEditAnime(index)}>Edit</button>
             <button onClick={() => handleDeleteAnime(index)}>Delete</button>
           </li>
