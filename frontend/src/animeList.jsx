@@ -93,16 +93,29 @@ function AnimeList() {
         </select>
         <button onClick={handleAddAnime}>{editIndex !== null ? 'Update Anime' : 'Add Anime'}</button>
       </div>
-      <ul>
-        {anime.map((animes, index) => (
-          <li key={index}>
-            
-            <span>{animes.name} - {animes.episodeCount} - {animes.stat}</span>
-            <button onClick={() => handleEditAnime(index)}>Edit</button>
-            <button onClick={() => handleDeleteAnime(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Title </th>
+              <th>Episode Count </th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {anime.map((animes, index) => (
+              <tr key={index}>
+                <td>{animes.name}</td>
+                <td>{animes.episodeCount}</td>
+                <td>{animes.stat}</td>
+                <td>
+                  <button onClick={() => handleEditAnime(index)}>Edit</button>
+                  <button onClick={() => handleDeleteAnime(index)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+      
     </div>
   );
 }
