@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import {v4 as uuid} from "uuid";
 function AnimeList() {
   const [anime, setAnime] = useState([]);
   const [newAnimeName, setNewAnimeName] = useState('');
   const [newEpsiodeWatched, setNewEpisodeWatched] = useState('');
   const [newEpsiodeCount, setNewEpisodeCount] = useState('');
-  const [newStatus, setNewStatus] = useState('')
+  const [newStatus, setNewStatus] = useState('');
   const [editIndex, setEditIndex] = useState(null);
-
   const statusOptions = [
     "Currently Watching",
     "Completed",
@@ -37,12 +37,15 @@ function AnimeList() {
   const handleAddAnime = () => {
     //only add anime entry if name, episode count, and status is inputed
     if (newAnimeName && newEpsiodeCount && newStatus) {
+      const uniqueID = uuid();
       if (editIndex === null) {
+        
         setAnime([...anime, { 
           name: newAnimeName, 
           episodesWatched: newEpsiodeWatched,
           episodeCount: newEpsiodeCount, 
-          stat: newStatus
+          stat: newStatus,
+          id: uniqueID
         }]);
       } else {
         const updatedAnime = [...anime];
@@ -50,7 +53,8 @@ function AnimeList() {
           name: newAnimeName, 
           episodesWatched: newEpsiodeWatched,
           episodeCount: newEpsiodeCount, 
-          stat: newStatus
+          stat: newStatus,
+          id: uniqueID
         };
         setAnime(updatedAnime);
         setEditIndex(null);
@@ -130,7 +134,7 @@ function AnimeList() {
                 <td>{animes.episodesWatched}</td>
                 <td>{animes.episodeCount}</td>
                 <td>{animes.stat}</td>
-                
+               
                 <td>
                   <button onClick={() => handleEditAnime(index)}>Edit</button>
                   <button onClick={() => handleDeleteAnime(index)}>Delete</button>
