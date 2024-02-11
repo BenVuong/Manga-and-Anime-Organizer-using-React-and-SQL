@@ -14,6 +14,7 @@ const db = mysql.createConnection(
     }
 )
 
+//sql query to get entries of from the book table 
 app.get('/',(req, res)=>{
     const sql = "SELECT * FROM book";
     db.query(sql, (err, result)=>{
@@ -32,7 +33,7 @@ app.get('/read/:id',(req, res)=>{
         return res.json(result)
     })
 })
-
+//sql query to insert new entry into the book table
 app.post('/book',(req, res)=>{
     const sql = "INSERT INTO book (`name`,`amountCollected`,`volAmount`, `publisher`, `story`, `art`, `synopsis`) VALUES (?)";
     const values = [

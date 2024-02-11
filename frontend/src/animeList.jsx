@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 function AnimeList() {
   const [anime, setAnime] = useState([]);
   const [newAnimeName, setNewAnimeName] = useState('');
+  const [newEpsiodeWatched, setNewEpisodeWatched] = useState('');
   const [newEpsiodeCount, setNewEpisodeCount] = useState('');
   const [newStatus, setNewStatus] = useState('')
   const [editIndex, setEditIndex] = useState(null);
@@ -21,7 +22,7 @@ function AnimeList() {
       setNewStatus(e.target.value);
     
   }  
-
+  //get array of anime objects from local storage
   useEffect(() => {
     const storedAnime = JSON.parse(localStorage.getItem('anime'));
     if (storedAnime) {
@@ -34,16 +35,28 @@ function AnimeList() {
   }, [anime]);
 
   const handleAddAnime = () => {
+    //only add anime entry if name, episode count, and status is inputed
     if (newAnimeName && newEpsiodeCount && newStatus) {
       if (editIndex === null) {
-        setAnime([...anime, { name: newAnimeName, episodeCount: newEpsiodeCount, stat: newStatus }]);
+        setAnime([...anime, { 
+          name: newAnimeName, 
+          episodesWatched: newEpsiodeWatched,
+          episodeCount: newEpsiodeCount, 
+          stat: newStatus
+        }]);
       } else {
         const updatedAnime = [...anime];
-        updatedAnime[editIndex] = {  name: newAnimeName, episodeCount: newEpsiodeCount, stat: newStatus };
+        updatedAnime[editIndex] = {
+          name: newAnimeName, 
+          episodesWatched: newEpsiodeWatched,
+          episodeCount: newEpsiodeCount, 
+          stat: newStatus
+        };
         setAnime(updatedAnime);
         setEditIndex(null);
       }
       setNewAnimeName('');
+      setNewEpisodeWatched('');
       setNewEpisodeCount('');
     }
   };
@@ -57,6 +70,7 @@ function AnimeList() {
   const handleEditAnime = (index) => {
     const animeToEdit = anime[index];
     setNewAnimeName(animeToEdit.name);
+    setNewEpisodeWatched(animeToEdit.episodesWatched)
     setNewEpisodeCount(animeToEdit.episodeCount);
     setEditIndex(index);
   };
@@ -74,6 +88,13 @@ function AnimeList() {
           value={newAnimeName}
           onChange={(e) => setNewAnimeName(e.target.value)}
         />
+        <input
+          type="number"
+          placeholder='Enter number of episodes watched'
+          value={newEpsiodeWatched}
+          onChange={(e)=> setNewEpisodeWatched(e.target.value)}  
+        >
+        </input>
         <input
           type="number"
           placeholder="Enter episode count"
@@ -97,6 +118,7 @@ function AnimeList() {
           <thead>
             <tr>
               <th>Title </th>
+              <th>Episodes Watched</th>
               <th>Episode Count </th>
               <th>Status</th>
             </tr>
@@ -105,8 +127,10 @@ function AnimeList() {
             {anime.map((animes, index) => (
               <tr key={index}>
                 <td>{animes.name}</td>
+                <td>{animes.episodesWatched}</td>
                 <td>{animes.episodeCount}</td>
                 <td>{animes.stat}</td>
+                
                 <td>
                   <button onClick={() => handleEditAnime(index)}>Edit</button>
                   <button onClick={() => handleDeleteAnime(index)}>Delete</button>
