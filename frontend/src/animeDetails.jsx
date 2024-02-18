@@ -12,19 +12,19 @@ function AnimeDetails(){
              a = animeList.find((person=>person.name==="Eureka 7"))
             console.log(a)
             setAnimeName(JSON.stringify(a))
-            for(const[key, value] of Object.entries(a)){
-                console.log(`${key}: ${value}`);
+           // for(const[key, value] of Object.entries(a)){
+            //    console.log(`${key}: ${value}`);
                 //map.set(key,value)
-            }
-            
+            //}   
         }
-
       }, []);
 
-        
+      
     return(
         <div> 
            
+            hello world
+            {animeName}
             
             
            

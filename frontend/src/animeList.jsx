@@ -122,8 +122,7 @@ function AnimeList() {
           <thead>
             <tr>
               <th>Title </th>
-              <th>Episodes Watched</th>
-              <th>Episode Count </th>
+              <th>Episode Progress</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -131,8 +130,7 @@ function AnimeList() {
             {anime.map((animes, index) => (
               <tr key={index}>
                 <td>{animes.name}</td>
-                <td>{animes.episodesWatched}</td>
-                <td>{animes.episodeCount}</td>
+                <td>{animes.episodesWatched}/{animes.episodeCount}</td>
                 <td>{animes.stat}</td>
                
                 <td>

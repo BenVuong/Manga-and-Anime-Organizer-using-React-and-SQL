@@ -35,8 +35,8 @@ function Home() {
                    <tr>
                         
                         <th>Title</th>
-                        <th>Amount Collected</th>
-                        <th>Total Amount of Volumes</th>
+                        <th>Collection Progress</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -45,8 +45,7 @@ function Home() {
                             return <tr key={index}>
                                 
                                 <td> {book.name}</td>
-                                <td> {book.amountCollected}</td>
-                                <td> {book.volAmount}</td>
+                                <td> {book.amountCollected}/{book.volAmount}</td>
                                 <td>
                                     <Link className="btn btn-outline-dark "
  role="button" to={`/read/${book.id}` }>Details</Link>
