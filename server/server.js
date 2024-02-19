@@ -40,6 +40,16 @@ app.get('/read/:id',(req, res)=>{
         return res.json(result)
     })
 })
+
+app.get('/readanime/:id',(req, res)=>{
+    const sql = "SELECT * FROM anime WHERE id = ?";
+    const id = req.params.id;
+
+    db.query(sql,[id], (err, result)=>{
+        if(err) return res.json({Message:"error inside server"});
+        return res.json(result)
+    })
+})
 //sql query to insert new entry into the book table
 app.post('/book',(req, res)=>{
     const sql = "INSERT INTO book (`name`,`amountCollected`,`volAmount`, `publisher`, `story`, `art`, `synopsis`) VALUES (?)";
@@ -86,6 +96,20 @@ app.put('/edit/:id', (req, res)=>{
     id], (err, result)=>
     {
         if(err) return res.json({Message: "Error inside server"});
+        return res.json(result);
+    })
+
+})
+
+app.put('/editanime/:id', (req, res)=>{
+    const sql = "UPDATE anime SET `title`=?, `episodeCount`=? WHERE id=?";
+    const id = req.params.id;
+    db.query(sql, [
+    req.body.title,
+    req.body.episodeCount, 
+    id], (err, result)=>
+    {
+        if(err) return res.json(err);
         return res.json(result);
     })
 

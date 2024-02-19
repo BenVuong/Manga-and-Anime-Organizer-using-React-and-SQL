@@ -47,8 +47,10 @@ function Home() {
                                 <td> {anime.title}</td>
                                 <td> {anime.episodeCount}</td>
                                 <td>
-                                   
-                                    <button onClick={() =>handleDelete(anime.id)} className="btn btn-danger"> Delete</button>
+                                  
+                                    <Link className="btn btn-outline-dark "
+ role="button" to={`/editanime/${anime.id}`}>Edit</Link>
+                                 
                                 </td>
                             </tr>
                             

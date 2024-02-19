@@ -33,6 +33,7 @@ function CreateAnime(){
                         onChange={e => setValues({...values, episodeCount: e.target.value})}/>
                     </div>
                     <button className="btn btn-success"> Submit</button>
+                    <Link to ="/animeList" className='btn btn-success'> Back</Link>
                 </form>
             </div>
         </div>
