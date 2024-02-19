@@ -10,7 +10,7 @@ function Home() {
     },[])
 
     const handleDelete = (id)=>{
-        axios.delete('http://localhost:8081/delete/' + id)
+        axios.delete('http://localhost:8081/deletebook/' + id)
         .then(res => {
             window.location.reload();
         })

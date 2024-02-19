@@ -23,6 +23,13 @@ app.get('/',(req, res)=>{
     })
 })
 
+app.get('/animelist',(req, res)=>{
+    const sql = "SELECT * FROM anime";
+    db.query(sql, (err, result)=>{
+        if(err) return res.json({Message:"error inside server"});
+        return res.json(result)
+    })
+})
 
 app.get('/read/:id',(req, res)=>{
     const sql = "SELECT * FROM book WHERE id = ?";
@@ -52,6 +59,19 @@ app.post('/book',(req, res)=>{
     })
 })
 
+app.post('/anime',(req, res)=>{
+    const sql = "INSERT INTO anime (`title`,`episodeCount`) VALUES (?)";
+    const values = [
+        req.body.title,
+        req.body.episodeCount
+    ]
+    db.query(sql, [values], (err, result) =>{
+        if(err) return res.json(err);
+        return res.json(result);
+
+    })
+})
+
 app.put('/edit/:id', (req, res)=>{
     const sql = "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=?, `publisher`=?, `story`=?, `art`=?, `synopsis`=?  WHERE id=?";
     const id = req.params.id;
@@ -71,7 +91,7 @@ app.put('/edit/:id', (req, res)=>{
 
 })
 
-app.delete('/delete/:id', (req, res)=>{
+app.delete('/deletebook/:id', (req, res)=>{
     const sql = "DELETE FROM book WHERE id = ?";
     const id = req.params.id;
     db.query(sql, [id], (err, result)=>
