@@ -21,6 +21,7 @@ function App() {
                 <Route path="/animeDetails" element={<AnimeDetails/>}/>
                 <Route path="/createanime" element={<CreateAnime/>}/>
                 <Route path="/editanime/:id" element={<EditAnime/>}/>
+                <Route path="/readanime/:id" element={<AnimeDetails/>}/> 
             </Routes>
         </BrowserRouter>
     )

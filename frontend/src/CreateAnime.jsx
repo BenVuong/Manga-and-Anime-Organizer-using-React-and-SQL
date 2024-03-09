@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 function CreateAnime(){
     const [values, setValues] = useState({
         title: '',
+        episodesWatched: '',
         episodeCount: ''
     })
     const navigate = useNavigate();
@@ -26,6 +27,11 @@ function CreateAnime(){
                         <label htmlFor="">Title</label>
                         <input type="text" placeholder='Enter Title' className='form-control'
                         onChange={e => setValues({...values, title: e.target.value})}/>
+                    </div>
+                    <div className='mb-2'>
+                        <label htmlFor="">Episodes Watched</label>
+                        <input type="number" placeholder='Enter amount' className='form-control'
+                        onChange={e => setValues({...values, episodesWatched: e.target.value})}/>
                     </div>
                     <div className='mb-2'>
                         <label htmlFor="">Episode Count</label>

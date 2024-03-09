@@ -70,9 +70,10 @@ app.post('/book',(req, res)=>{
 })
 
 app.post('/anime',(req, res)=>{
-    const sql = "INSERT INTO anime (`title`,`episodeCount`) VALUES (?)";
+    const sql = "INSERT INTO anime (`title`,`episodesWatched`,`episodeCount`) VALUES (?)";
     const values = [
         req.body.title,
+        req.body.episodesWatched,
         req.body.episodeCount
     ]
     db.query(sql, [values], (err, result) =>{
@@ -102,10 +103,11 @@ app.put('/edit/:id', (req, res)=>{
 })
 
 app.put('/editanime/:id', (req, res)=>{
-    const sql = "UPDATE anime SET `title`=?, `episodeCount`=? WHERE id=?";
+    const sql = "UPDATE anime SET `title`=?,`episodesWatched`=? ,`episodeCount`=? WHERE id=?";
     const id = req.params.id;
     db.query(sql, [
     req.body.title,
+    req.body.episodesWatched,
     req.body.episodeCount, 
     id], (err, result)=>
     {
@@ -117,6 +119,16 @@ app.put('/editanime/:id', (req, res)=>{
 
 app.delete('/deletebook/:id', (req, res)=>{
     const sql = "DELETE FROM book WHERE id = ?";
+    const id = req.params.id;
+    db.query(sql, [id], (err, result)=>
+    {
+        if(err) return res.json({Message: "Error inside server"});
+        return res.json(result);
+    })
+})
+
+app.delete('/deleteanime/:id', (req, res)=>{
+    const sql = "DELETE FROM anime WHERE id = ?";
     const id = req.params.id;
     db.query(sql, [id], (err, result)=>
     {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import { Link } from "react-router-dom";
-function Home() {
+function AnimeList() {
     const [data, setData]= useState([])
     useEffect(()=>{
         axios.get('http://localhost:8081/animelist')
@@ -35,7 +35,7 @@ function Home() {
                    <tr>
                         
                         <th>Title</th>
-                        <th>Collection Progress</th>
+                        <th>Watch Progress</th>
                         
                     </tr>
                 </thead>
@@ -45,12 +45,13 @@ function Home() {
                             return <tr key={index}>
                                 
                                 <td> {anime.title}</td>
-                                <td> {anime.episodeCount}</td>
+                                <td> {anime.episodesWatched}/{anime.episodeCount}</td>
                                 <td>
-                                  
+                                    <Link className="btn btn-outline-dark "
+ role="button" to={`/readanime/${anime.id}` }>Details</Link>
                                     <Link className="btn btn-outline-dark "
  role="button" to={`/editanime/${anime.id}`}>Edit</Link>
-                                 
+                                 <button onClick={() =>handleDelete(anime.id)} className="btn btn-danger"> Delete</button>
                                 </td>
                             </tr>
                             
@@ -63,4 +64,4 @@ function Home() {
     )
 }
 
-export default Home
+export default AnimeList

@@ -8,6 +8,7 @@ function EditAnime(){
    
     const [values, setValues] = useState({
         title: '',
+        episodesWatched: '',
         episodeCount: ''
     })
     const navigate = useNavigate();
@@ -26,6 +27,7 @@ function EditAnime(){
         .then(res => {console.log(res)
             setValues({...values, 
                     title: res.data[0].title, 
+                    episodesWatched: res.data[0].episodesWatched,
                     episodeCount: res.data[0].episodeCount, 
                     
                 });
@@ -44,7 +46,13 @@ function EditAnime(){
                     onChange={e => setValues({...values, title: e.target.value})}/>
                 </div>
                 <div className='mb-2'>
-                    <label htmlFor="">Episode</label>
+                    <label htmlFor="">Episodes Watched</label>
+                    <input type="number" placeholder='Enter amount' className='form-control'
+                    value={values.episodesWatched}
+                    onChange={e => setValues({...values, episodesWatched: e.target.value})}/>
+                </div>
+                <div className='mb-2'>
+                    <label htmlFor="">Episode Count</label>
                     <input type="number" placeholder='Enter amount' className='form-control'
                     value={values.episodeCount}
                     onChange={e => setValues({...values, episodeCount: e.target.value})}/>
