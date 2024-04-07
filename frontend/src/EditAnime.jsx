@@ -9,7 +9,8 @@ function EditAnime(){
     const [values, setValues] = useState({
         title: '',
         episodesWatched: '',
-        episodeCount: ''
+        episodeCount: '',
+        score: ''
     })
     const navigate = useNavigate();
 
@@ -56,6 +57,22 @@ function EditAnime(){
                     <input type="number" placeholder='Enter amount' className='form-control'
                     value={values.episodeCount}
                     onChange={e => setValues({...values, episodeCount: e.target.value})}/>
+                </div>
+                <div className='mb-2'>
+                    <label htmlFor="">Score</label>
+                        <select name="selectedScore">
+                            <option value="">Select Score</option>
+                            <option value="10">10 Masterpiece</option>
+                            <option value="9">9 Great</option>
+                            <option value="8">8 Very Good</option>
+                            <option value="7">7 Good</option>
+                            <option value="6">6 Fine</option>
+                            <option value="5">5 Average</option>
+                            <option value="4">4 Bad</option>
+                            <option value="3">3 Very Bad</option>
+                            <option value="2">2 Horrible</option>
+                            <option value="1">1 Appalling </option>
+                        </select>
                 </div>
                 <button className="btn btn-success"> Update</button>
                 <Link to ="/animeList" className='btn btn-success'> Back</Link>

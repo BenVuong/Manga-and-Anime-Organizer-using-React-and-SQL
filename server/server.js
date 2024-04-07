@@ -70,11 +70,12 @@ app.post('/book',(req, res)=>{
 })
 
 app.post('/anime',(req, res)=>{
-    const sql = "INSERT INTO anime (`title`,`episodesWatched`,`episodeCount`) VALUES (?)";
+    const sql = "INSERT INTO anime (`title`,`episodesWatched`,`episodeCount`,`score`) VALUES (?)";
     const values = [
         req.body.title,
         req.body.episodesWatched,
-        req.body.episodeCount
+        req.body.episodeCount,
+        req.body.score
     ]
     db.query(sql, [values], (err, result) =>{
         if(err) return res.json(err);
