@@ -104,12 +104,13 @@ app.put('/edit/:id', (req, res)=>{
 })
 
 app.put('/editanime/:id', (req, res)=>{
-    const sql = "UPDATE anime SET `title`=?,`episodesWatched`=? ,`episodeCount`=? WHERE id=?";
+    const sql = "UPDATE anime SET `title`=?,`episodesWatched`=? ,`episodeCount`=?, `score`=? WHERE id=?";
     const id = req.params.id;
     db.query(sql, [
     req.body.title,
     req.body.episodesWatched,
     req.body.episodeCount, 
+    req.body.score,
     id], (err, result)=>
     {
         if(err) return res.json(err);

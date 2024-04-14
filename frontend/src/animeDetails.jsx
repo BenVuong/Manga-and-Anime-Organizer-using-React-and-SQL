@@ -19,7 +19,8 @@ function AnimeDetails() {
             <h3>ID: {anime.id}</h3>
             <h3>Anime Title: {anime.title}</h3>
             <h3>Epsisodes Watched: {anime.episodesWatched}</h3>
-            <h3>Epsisodes Count: {anime.episodeCount}</h3>
+            <h3>Epsiodes Count: {anime.episodeCount}</h3>
+            <h3>Scored: {anime.score}</h3>
             
 
             <Link to ="/animeList" className='btn btn-success'> Back</Link>

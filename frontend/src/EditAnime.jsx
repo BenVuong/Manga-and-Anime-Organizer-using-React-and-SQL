@@ -23,6 +23,8 @@ function EditAnime(){
         }).catch(err=> console.log(err));
     }
 
+  
+
     useEffect(()=>{
         axios.get('http://localhost:8081/readanime/'+id)
         .then(res => {console.log(res)
@@ -30,6 +32,7 @@ function EditAnime(){
                     title: res.data[0].title, 
                     episodesWatched: res.data[0].episodesWatched,
                     episodeCount: res.data[0].episodeCount, 
+                    score: res.data[0].score
                     
                 });
         })
@@ -60,7 +63,9 @@ function EditAnime(){
                 </div>
                 <div className='mb-2'>
                     <label htmlFor="">Score</label>
-                        <select name="selectedScore">
+                        <select name="selectedScore" 
+                        value={values.score}
+                        onChange={e => setValues({...values, score: e.target.value})}>
                             <option value="">Select Score</option>
                             <option value="10">10 Masterpiece</option>
                             <option value="9">9 Great</option>
