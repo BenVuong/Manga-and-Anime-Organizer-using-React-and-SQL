@@ -5,10 +5,12 @@ import './App.css';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
 
 const Title = styled('div')(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: '#616161' ,
     border: '1px solid',
+    color: '#fff',
     borderColor: theme.palette.mode === 'dark' ? '#444d58' : '#ced7e0',
     padding: theme.spacing(1),
     borderRadius: '4px',
@@ -53,8 +55,17 @@ function AnimeDetails() {
                 </Grid>
                 <Grid xs={12} sm={2}>
                     <Pillar>
-                        <Item>Details:</Item>
-                        <Item>Episodes: {anime.episodeCount}</Item>
+                        <Item>
+                            <img src={anime.image}/>
+                            
+                        </Item>
+                        <Item>
+                            Information:
+                            <Divider/>
+                            Episodes: {anime.episodeCount}
+                        </Item>
+                        
+                        
                         <Item>
                             <Link to ="/animeList" className='btn btn-success'> Back</Link>
                             <Link  className="btn btn-outline-dark "
@@ -65,7 +76,9 @@ function AnimeDetails() {
                 <Grid xs={12} sm={8}>
                     <Item>Score: {anime.score}</Item>
                     <Item>Progress: {anime.episodesWatched}</Item>
-                    <Item>Synopsis: </Item>
+                    <Item>Synopsis:
+                        <Divider/>
+                         {anime.synopsis}</Item>
                 </Grid>
             </Grid>
         </Box>

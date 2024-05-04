@@ -10,7 +10,9 @@ function EditAnime(){
         title: '',
         episodesWatched: '',
         episodeCount: '',
-        score: ''
+        score: '',
+        synopsis: '',
+        image:''
     })
     const navigate = useNavigate();
 
@@ -32,7 +34,9 @@ function EditAnime(){
                     title: res.data[0].title, 
                     episodesWatched: res.data[0].episodesWatched,
                     episodeCount: res.data[0].episodeCount, 
-                    score: res.data[0].score
+                    score: res.data[0].score,
+                    synopsis: res.data[0].synopsis,
+                    image: res.data[0].image
                     
                 });
         })
@@ -61,6 +65,21 @@ function EditAnime(){
                     value={values.episodeCount}
                     onChange={e => setValues({...values, episodeCount: e.target.value})}/>
                 </div>
+
+                <div className='mb-2'>
+                    <label htmlFor="">Synopsis</label>
+                    <input type="text" placeholder='Enter Synopsis' className='form-control'
+                    value={values.synopsis}
+                    onChange={e => setValues({...values, synopsis: e.target.value})}/>
+                </div>
+
+                <div className='mb-2'>
+                    <label htmlFor="">Thumbnail Art</label>
+                    <input type="text" placeholder='Enter link to thumbnail art' className='form-control'
+                    value={values.image}
+                    onChange={e => setValues({...values, image: e.target.value})}/>
+                </div>
+
                 <div className='mb-2'>
                     <label htmlFor="">Score</label>
                         <select name="selectedScore" 

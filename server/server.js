@@ -70,12 +70,14 @@ app.post('/book',(req, res)=>{
 })
 
 app.post('/anime',(req, res)=>{
-    const sql = "INSERT INTO anime (`title`,`episodesWatched`,`episodeCount`,`score`) VALUES (?)";
+    const sql = "INSERT INTO anime (`title`,`episodesWatched`,`episodeCount`,`score`, `synopsis`, `image`) VALUES (?)";
     const values = [
         req.body.title,
         req.body.episodesWatched,
         req.body.episodeCount,
-        req.body.score
+        req.body.score,
+        req.body.synopsis,
+        req.body.image
     ]
     db.query(sql, [values], (err, result) =>{
         if(err) return res.json(err);
@@ -104,13 +106,15 @@ app.put('/edit/:id', (req, res)=>{
 })
 
 app.put('/editanime/:id', (req, res)=>{
-    const sql = "UPDATE anime SET `title`=?,`episodesWatched`=? ,`episodeCount`=?, `score`=? WHERE id=?";
+    const sql = "UPDATE anime SET `title`=?,`episodesWatched`=? ,`episodeCount`=?, `score`=?, `synopsis`=?, `image`=? WHERE id=?";
     const id = req.params.id;
     db.query(sql, [
     req.body.title,
     req.body.episodesWatched,
     req.body.episodeCount, 
     req.body.score,
+    req.body.synopsis,
+    req.body.image,
     id], (err, result)=>
     {
         if(err) return res.json(err);

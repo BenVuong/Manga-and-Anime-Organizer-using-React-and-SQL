@@ -6,7 +6,10 @@ function CreateAnime(){
     const [values, setValues] = useState({
         title: '',
         episodesWatched: '',
-        episodeCount: ''
+        episodeCount: '',
+        score: '',
+        synopsis: '',
+        image: ''
     })
     const navigate = useNavigate();
     const handleSubmit = (e)=> {
@@ -38,6 +41,35 @@ function CreateAnime(){
                         <input type="number" placeholder='Enter amount' className='form-control'
                         onChange={e => setValues({...values, episodeCount: e.target.value})}/>
                     </div>
+
+                    <div className='mb-2'>
+                        <label htmlFor="">Synopsis</label>
+                        <input type="text" placeholder='Enter Synopsis' className='form-control'
+                        onChange={e => setValues({...values, synopsis: e.target.value})}/>
+                    </div>
+
+                    <div className='mb-2'>
+                        <label htmlFor="">Thumbnail Art</label>
+                        <input type="text" placeholder='Enter a link to thumbnail art' className='form-control'
+                        onChange={e => setValues({...values, image: e.target.value})}/>
+                    </div>
+                    <div className='mb-2'>
+                    <label htmlFor="">Score</label>
+                        <select name="selectedScore" 
+                        onChange={e => setValues({...values, score: e.target.value})}>
+                            <option value="">Select Score</option>
+                            <option value="10">10 Masterpiece</option>
+                            <option value="9">9 Great</option>
+                            <option value="8">8 Very Good</option>
+                            <option value="7">7 Good</option>
+                            <option value="6">6 Fine</option>
+                            <option value="5">5 Average</option>
+                            <option value="4">4 Bad</option>
+                            <option value="3">3 Very Bad</option>
+                            <option value="2">2 Horrible</option>
+                            <option value="1">1 Appalling </option>
+                        </select>
+                </div>
                     <button className="btn btn-success"> Submit</button>
                     <Link to ="/animeList" className='btn btn-success'> Back</Link>
                 </form>
