@@ -15,7 +15,7 @@ function EditAnime(){
         image:''
     })
     const navigate = useNavigate();
-
+    
     const handleUpdate = event => {
         event.preventDefault();
         axios.put('http://localhost:8081/editanime/'+id, values)

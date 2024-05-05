@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 function CreateAnime(){
@@ -11,7 +11,42 @@ function CreateAnime(){
         synopsis: '',
         image: ''
     })
+    const [searchAnimeName, setSearchAnimeName] = useState()
+    const [englishTitle, setEnglishTitle] = useState()
+    const animeName = "Paranoia Agent"
+    const API_URL = 'https://api.jikan.moe/v4'
+    async function searchAnime(search) {
+        const response = await fetch(`${API_URL}/anime?q=${search}`);
+        const animeData = await response.json();
+        console.log(animeData.data[0].title_english);
+        setValues({...values, 
+            title: animeData.data[0].title_english,
+            episodeCount: animeData.data[0].episodes,
+            synopsis: animeData.data[0].synopsis,
+            image: animeData.data[0].images.jpg.image_url
+            
+        });
+      }
+    
+    useEffect(()=>{
+        
+        
+    }, [])
+    
+
     const navigate = useNavigate();
+ 
+    const handleSearchSubmit = (e)=> {
+        e.preventDefault()
+        searchAnime(searchAnimeName)
+        axios.post('http://localhost:8081/anime', values)
+        .then(res =>{
+            console.log(res);
+            navigate('/animeList')
+        })
+        .catch(err=>console.log(err))
+    }
+
     const handleSubmit = (e)=> {
         e.preventDefault()
         axios.post('http://localhost:8081/anime', values)
@@ -23,9 +58,20 @@ function CreateAnime(){
     }
     return(
         <div>
+            <h2>Add Anime</h2>
             <div>
+                <form onSubmit={handleSearchSubmit}>
+                    <div className='mb-2'>
+                        <label htmlFor="">Search Anime Automatically</label>
+                        <input type="text" placeholder="Enter anime name and info will be filled in automatically"
+                        className='form-control' onChange={e=>setSearchAnimeName(e.target.value)}>
+                        </input>
+                        <button className="btn btn-success"> Submit</button>
+                    </div>
+                </form>
+
                 <form onSubmit={handleSubmit}>
-                    <h2>Add Anime</h2>
+                    
                     <div className='mb-2'>
                         <label htmlFor="">Title</label>
                         <input type="text" placeholder='Enter Title' className='form-control'
