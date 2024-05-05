@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 function CreateAnime(){
@@ -12,8 +12,8 @@ function CreateAnime(){
         image: ''
     })
     const [searchAnimeName, setSearchAnimeName] = useState()
-    const [englishTitle, setEnglishTitle] = useState()
-    const animeName = "Paranoia Agent"
+    
+ 
     const API_URL = 'https://api.jikan.moe/v4'
     async function searchAnime(search) {
         const response = await fetch(`${API_URL}/anime?q=${search}`);
@@ -27,24 +27,15 @@ function CreateAnime(){
             
         });
       }
-    
-    useEffect(()=>{
-        
-        
-    }, [])
-    
+
 
     const navigate = useNavigate();
  
     const handleSearchSubmit = (e)=> {
-        e.preventDefault()
+        e.preventDefault();
         searchAnime(searchAnimeName)
-        axios.post('http://localhost:8081/anime', values)
-        .then(res =>{
-            console.log(res);
-            navigate('/animeList')
-        })
-        .catch(err=>console.log(err))
+        console.log(values)
+        
     }
 
     const handleSubmit = (e)=> {
@@ -66,8 +57,8 @@ function CreateAnime(){
                         <input type="text" placeholder="Enter anime name and info will be filled in automatically"
                         className='form-control' onChange={e=>setSearchAnimeName(e.target.value)}>
                         </input>
-                        <button className="btn btn-success"> Submit</button>
                     </div>
+                    <button className="btn btn-success"> Search Anime</button>
                 </form>
 
                 <form onSubmit={handleSubmit}>
@@ -75,6 +66,7 @@ function CreateAnime(){
                     <div className='mb-2'>
                         <label htmlFor="">Title</label>
                         <input type="text" placeholder='Enter Title' className='form-control'
+                        value={values.title}
                         onChange={e => setValues({...values, title: e.target.value})}/>
                     </div>
                     <div className='mb-2'>
@@ -85,19 +77,23 @@ function CreateAnime(){
                     <div className='mb-2'>
                         <label htmlFor="">Episode Count</label>
                         <input type="number" placeholder='Enter amount' className='form-control'
+                        value={values.episodeCount}
                         onChange={e => setValues({...values, episodeCount: e.target.value})}/>
                     </div>
 
                     <div className='mb-2'>
                         <label htmlFor="">Synopsis</label>
                         <input type="text" placeholder='Enter Synopsis' className='form-control'
+                        value={values.synopsis}
                         onChange={e => setValues({...values, synopsis: e.target.value})}/>
                     </div>
 
                     <div className='mb-2'>
                         <label htmlFor="">Thumbnail Art</label>
                         <input type="text" placeholder='Enter a link to thumbnail art' className='form-control'
+                        value={values.image}
                         onChange={e => setValues({...values, image: e.target.value})}/>
+                        <img src={values.image}></img>
                     </div>
                     <div className='mb-2'>
                     <label htmlFor="">Score</label>

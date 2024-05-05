@@ -8,6 +8,7 @@ import AnimeList from "./animeList";
 import AnimeDetails from "./animeDetails";
 import CreateAnime from "./CreateAnime";
 import EditAnime from "./EditAnime";
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 function App() {
     return(
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/createanime" element={<CreateAnime/>}/>
                 <Route path="/editanime/:id" element={<EditAnime/>}/>
                 <Route path="/readanime/:id" element={<AnimeDetails/>}/> 
+                
             </Routes>
         </BrowserRouter>
     )
