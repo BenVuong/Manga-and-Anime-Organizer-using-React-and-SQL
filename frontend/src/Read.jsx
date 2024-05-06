@@ -1,36 +1,97 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { useParams, Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams, Link } from "react-router-dom";
+import "./App.css";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
+
+const Title = styled("div")(({ theme }) => ({
+  backgroundColor: "#616161",
+  border: "1px solid",
+  color: "#fff",
+  borderColor: theme.palette.mode === "dark" ? "#444d58" : "#ced7e0",
+  padding: theme.spacing(1),
+  borderRadius: "4px",
+  textAlign: "left",
+  fontSize: "30px",
+}));
+
+const Item = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+
+  borderColor: theme.palette.mode === "dark" ? "#444d58" : "#ced7e0",
+  padding: theme.spacing(1),
+  borderRadius: "4px",
+  textAlign: "left",
+}));
+
+const Pillar = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  border: "1px solid",
+  borderColor: theme.palette.mode === "dark" ? "#444d58" : "#ced7e0",
+  padding: theme.spacing(1),
+  borderRadius: "4px",
+  textAlign: "left",
+}));
 
 function Read() {
-    const {id} = useParams();
-    const [book, setBook] = useState([])
+  const { id } = useParams();
+  const [book, setBook] = useState([]);
 
-    useEffect(()=>{
-        axios.get('http://localhost:8081/read/'+id)
-        .then(res => {console.log(res)
-            setBook(res.data[0]);
-        })
-        .catch(err=> console.log(err))
-    }, [])
-    return(
-        <div className='p-3 mb-2 bg-secondary text-white'>
-            <h2>Manga details</h2>
-            <h3>ID: {book.id}</h3>
-            <h3>Manga Title: {book.name}</h3>
-            <h3>Story by: {book.story}</h3>
-            <h3>Art by: {book.art}</h3>
-            <h3>Amount of volumes collected: {book.amountCollected}</h3>
-            <h3>Total Amount of Volumes: {book.volAmount}</h3>
-            <h3>Publisher: {book.publisher}</h3>
-            <h3>Synopsis:</h3>
-            <h3>{book.synopsis}</h3>
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/read/" + id)
+      .then((res) => {
+        console.log(res);
+        setBook(res.data[0]);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={1}>
+        <Grid xs={12}>
+          <Title>{book.name}</Title>
+        </Grid>
+        <Grid xs={12} sm={2}>
+          <Pillar>
+            <Item>
+              <Item> Information:</Item>
+              <Divider />
+              <Item>Volumes: {book.volAmount}</Item>
+              <Item>Story by: {book.story}</Item>
+              <Item>Art by: {book.art}</Item>
+            </Item>
 
-            <Link to ="/" className='btn btn-success'> Back</Link>
-            <Link  className="btn btn-outline-dark "
- role="button" to={`/edit/${book.id}`}>Edit</Link>
-        </div>
-    )
+            <Item>
+              <Link to="/" className="btn btn-success">
+                {" "}
+                Back
+              </Link>
+              <Link
+                className="btn btn-outline-dark "
+                role="button"
+                to={`/edit/${book.id}`}
+              >
+                Edit
+              </Link>
+            </Item>
+          </Pillar>
+        </Grid>
+        <Grid xs={12} sm={8}>
+          <Item>Score: </Item>
+          <Item>Volumes Collected: {book.amountCollected}</Item>
+          <Item>
+            Synopsis:
+            <Divider />
+            {book.synopsis}
+          </Item>
+        </Grid>
+      </Grid>
+    </Box>
+  );
 }
 
-export default Read
+export default Read;
