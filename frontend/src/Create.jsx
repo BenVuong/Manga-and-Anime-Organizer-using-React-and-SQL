@@ -11,6 +11,7 @@ function Create() {
     story: "",
     art: "",
     synopsis: "",
+    image: "",
   });
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -98,6 +99,18 @@ function Create() {
                 setValues({ ...values, synopsis: e.target.value })
               }
             />
+          </div>
+
+          <div className="mb-2">
+            <label htmlFor="">Thumbnail Art</label>
+            <input
+              type="text"
+              placeholder="Enter a link to thumbnail art"
+              className="form-control"
+              value={values.image}
+              onChange={(e) => setValues({ ...values, image: e.target.value })}
+            />
+            <img src={values.image}></img>
           </div>
           <button className="btn btn-success"> Submit</button>
           <Link to="/" className="btn btn-success">

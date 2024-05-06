@@ -58,11 +58,13 @@ function Read() {
         <Grid xs={12} sm={2}>
           <Pillar>
             <Item>
+              <img src={book.image} />
               <Item> Information:</Item>
               <Divider />
               <Item>Volumes: {book.volAmount}</Item>
               <Item>Story by: {book.story}</Item>
               <Item>Art by: {book.art}</Item>
+              <Item>Publisher: {book.publisher}</Item>
             </Item>
 
             <Item>
