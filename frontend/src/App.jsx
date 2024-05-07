@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Home";
-import Create from "./Create";
-import Read from "./Read";
-import Edit from "./Edit";
-import AnimeList from "./animeList";
-import AnimeDetails from "./animeDetails";
-import CreateAnime from "./CreateAnime";
-import EditAnime from "./EditAnime";
+import Home from "./components/manga/Home";
+import Create from "./components/manga/Create";
+import Read from "./components/manga/Read";
+import Edit from "./components/manga/Edit";
+import AnimeList from "./components/anime/animeList";
+import AnimeDetails from "./components/anime/animeDetails";
+import CreateAnime from "./components/anime/CreateAnime";
+import EditAnime from "./components/anime/EditAnime";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
