@@ -82,7 +82,7 @@ function Read() {
             </Item>
           </Pillar>
         </Grid>
-        <Grid xs={12} sm={8}>
+        <Grid xs={12} sm={10}>
           <Item>Score: </Item>
           <Item>Volumes Collected: {book.amountCollected}</Item>
           <Item>

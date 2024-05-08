@@ -81,9 +81,11 @@ function AnimeDetails() {
             </Item>
           </Pillar>
         </Grid>
-        <Grid xs={12} sm={8}>
+        <Grid xs={12} sm={10}>
           <Item>Score: {anime.score}</Item>
-          <Item>Progress: {anime.episodesWatched}</Item>
+          <Item>
+            Progress: {anime.episodesWatched}/{anime.episodeCount}
+          </Item>
           <Item>
             Synopsis:
             <Divider />

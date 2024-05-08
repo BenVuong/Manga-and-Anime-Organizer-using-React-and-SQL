@@ -16,6 +16,28 @@ function Create() {
   const navigate = useNavigate();
   const [searchMangaName, setSearchMangaName] = useState();
   const API_URL = "https://api.jikan.moe/v4";
+  async function searchManga(search) {
+    const response = await fetch(`${API_URL}/manga?q=${search}`);
+    const mangaData = await response.json();
+    console.log(mangaData.data[0]);
+    setValues({
+      ...values,
+      title: mangaData.data[0].title_english,
+      totalVolumes: mangaData.data[0].volumes,
+      story: mangaData.data[0].authors[0].name,
+      art: mangaData.data[0].authors[0].name,
+      synopsis: mangaData.data[0].synopsis,
+      image: mangaData.data[0].images.jpg.image_url,
+    });
+  }
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchMangaName === "") {
+    } else {
+      searchManga(searchMangaName);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,14 +52,28 @@ function Create() {
   return (
     <div>
       <div>
+        <h2>Add Manga</h2>
+        <form onSubmit={handleSearchSubmit}>
+          <div className="mb-2">
+            <label htmlFor="">Search Manga Automatically</label>
+            <input
+              type="text"
+              placeholder="Enter title of a manga and its info will be auto filled "
+              className="form-control"
+              onChange={(e) => setSearchMangaName(e.target.value)}
+            ></input>
+          </div>
+          <button className="btn btn-success"> Search Manga</button>
+        </form>
+
         <form onSubmit={handleSubmit}>
-          <h2>Add Manga</h2>
           <div className="mb-2">
             <label htmlFor="">Title</label>
             <input
               type="text"
               placeholder="Enter Title"
               className="form-control"
+              value={values.title}
               onChange={(e) => setValues({ ...values, title: e.target.value })}
             />
           </div>
@@ -58,6 +94,7 @@ function Create() {
               type="number"
               placeholder="Enter amount"
               className="form-control"
+              value={values.totalVolumes}
               onChange={(e) =>
                 setValues({ ...values, totalVolumes: e.target.value })
               }
@@ -80,6 +117,7 @@ function Create() {
               type="text"
               placeholder="Story by"
               className="form-control"
+              value={values.story}
               onChange={(e) => setValues({ ...values, story: e.target.value })}
             />
           </div>
@@ -89,6 +127,7 @@ function Create() {
               type="text"
               placeholder="Art by"
               className="form-control"
+              value={values.art}
               onChange={(e) => setValues({ ...values, art: e.target.value })}
             />
           </div>
@@ -98,6 +137,7 @@ function Create() {
               type="text"
               placeholder="Enter Synposis"
               className="form-control"
+              value={values.synopsis}
               onChange={(e) =>
                 setValues({ ...values, synopsis: e.target.value })
               }
