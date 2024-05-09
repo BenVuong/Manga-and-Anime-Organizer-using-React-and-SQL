@@ -63,7 +63,9 @@ function AnimeDetails() {
             <Item>
               Information:
               <Divider />
-              Episodes: {anime.episodeCount}
+              <Item>Episodes: {anime.episodeCount}</Item>
+              <Item>Type: {anime.type}</Item>
+              <Item>Studio: {anime.studio}</Item>
             </Item>
 
             <Item>
@@ -86,6 +88,7 @@ function AnimeDetails() {
           <Item>
             Progress: {anime.episodesWatched}/{anime.episodeCount}
           </Item>
+          <Item>Status: {anime.status}</Item>
           <Item>
             Synopsis:
             <Divider />

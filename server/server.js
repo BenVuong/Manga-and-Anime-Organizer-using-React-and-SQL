@@ -70,7 +70,7 @@ app.post("/book", (req, res) => {
 
 app.post("/anime", (req, res) => {
   const sql =
-    "INSERT INTO anime (`title`,`episodesWatched`,`episodeCount`,`score`, `synopsis`, `image`) VALUES (?)";
+    "INSERT INTO anime (`title`,`episodesWatched`,`episodeCount`,`score`, `synopsis`, `image`, `type`, `status`, `studio`) VALUES (?)";
   const values = [
     req.body.title,
     req.body.episodesWatched,
@@ -78,6 +78,9 @@ app.post("/anime", (req, res) => {
     req.body.score,
     req.body.synopsis,
     req.body.image,
+    req.body.type,
+    req.body.status,
+    req.body.studio,
   ];
   db.query(sql, [values], (err, result) => {
     if (err) return res.json(err);
@@ -111,7 +114,7 @@ app.put("/edit/:id", (req, res) => {
 
 app.put("/editanime/:id", (req, res) => {
   const sql =
-    "UPDATE anime SET `title`=?,`episodesWatched`=? ,`episodeCount`=?, `score`=?, `synopsis`=?, `image`=? WHERE id=?";
+    "UPDATE anime SET `title`=?,`episodesWatched`=? ,`episodeCount`=?, `score`=?, `synopsis`=?, `image`=?, `type`=?, `status`=?, `studio`=? WHERE id=?";
   const id = req.params.id;
   db.query(
     sql,
@@ -122,6 +125,9 @@ app.put("/editanime/:id", (req, res) => {
       req.body.score,
       req.body.synopsis,
       req.body.image,
+      req.body.type,
+      req.body.status,
+      req.body.studio,
       id,
     ],
     (err, result) => {

@@ -23,15 +23,15 @@ function Home() {
     <div>
       <h1>Manga Collection</h1>
       <div className="d-flex justify-content  ">
-        <Link to="/create" className="btn btn-success">
-          {" "}
-          Create +
-        </Link>
-      </div>
-      <div className="d-flex justify-content  ">
         <Link to="/animeList" className="btn btn-success">
           {" "}
           Anime List{" "}
+        </Link>
+      </div>
+      <div className="d-flex justify-content  ">
+        <Link to="/create" className="btn btn-success">
+          {" "}
+          Add Manga +
         </Link>
       </div>
       <div className="p-3 mb-2 bg-secondary text-white">

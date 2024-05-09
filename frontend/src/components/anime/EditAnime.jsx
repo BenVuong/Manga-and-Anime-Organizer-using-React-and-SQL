@@ -12,6 +12,9 @@ function EditAnime() {
     score: "",
     synopsis: "",
     image: "",
+    type: "",
+    status: "",
+    studio: "",
   });
   const navigate = useNavigate();
 
@@ -39,6 +42,9 @@ function EditAnime() {
           score: res.data[0].score,
           synopsis: res.data[0].synopsis,
           image: res.data[0].image,
+          type: res.data[0].type,
+          status: res.data[0].status,
+          studio: res.data[0].studio,
         });
       })
       .catch((err) => console.log(err));
@@ -82,7 +88,30 @@ function EditAnime() {
               }
             />
           </div>
-
+          <div className="mb-2">
+            <label htmlFor="">Studio</label>
+            <input
+              type="text"
+              placeholder="Enter in Studio"
+              className="form-control"
+              value={values.studio}
+              onChange={(e) => setValues({ ...values, studio: e.target.value })}
+            />
+          </div>
+          <div className="mb-2">
+            <label htmlFor="">Type</label>
+            <select
+              name="selectedType"
+              value={values.type}
+              onChange={(e) => setValues({ ...values, type: e.target.value })}
+            >
+              <option value="">Select type</option>
+              <option value="TV">TV</option>
+              <option value="Movie">Movie</option>
+              <option value="OVA">OVA</option>
+              <option value="ONA">ONA</option>
+            </select>
+          </div>
           <div className="mb-2">
             <label htmlFor="">Synopsis</label>
             <input
@@ -107,7 +136,21 @@ function EditAnime() {
             />
             <img src={values.image}></img>
           </div>
-
+          <div className="mb-2">
+            <label htmlFor="">Status</label>
+            <select
+              name="selectedStatus"
+              value={values.status}
+              onChange={(e) => setValues({ ...values, status: e.target.value })}
+            >
+              <option value="">Select status</option>
+              <option value="Watching">Watching</option>
+              <option value="Completed">Completed</option>
+              <option value="On-Hold">On-Hold</option>
+              <option value="Dropped">Dropped</option>
+              <option value="Plan to Watch">Plan to Watch</option>
+            </select>
+          </div>
           <div className="mb-2">
             <label htmlFor="">Score</label>
             <select
