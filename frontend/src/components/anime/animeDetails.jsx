@@ -52,10 +52,10 @@ function AnimeDetails() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1}>
-        <Grid xs={12}>
+        <Grid sm={12}>
           <Title>{anime.title}</Title>
         </Grid>
-        <Grid xs={12} sm={2}>
+        <Grid xs={15} sm={2}>
           <Pillar>
             <Item>
               <img src={anime.image} />

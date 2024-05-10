@@ -7,6 +7,7 @@ function AnimeList() {
     axios
       .get("http://localhost:8081/animelist")
       .then((res) => setData(res.data))
+      .then(console.log(data[1]))
       .catch((err) => console.log(err));
   }, []);
 

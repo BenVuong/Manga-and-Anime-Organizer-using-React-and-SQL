@@ -73,11 +73,12 @@ function CreateAnime() {
                     ></TextField>
                   </div>
                   <button className="btn btn-success"> Search Anime</button>
+                  <h3>Cover Art Preview:</h3>
+                  <img src={values.image}></img>
                 </form>
               </Grid>
             </Grid>
           </CardContent>
-          <img src={values.image}></img>
         </Card>
       </Grid>
 
@@ -113,9 +114,6 @@ function CreateAnime() {
                       setValues({ ...values, studio: e.target.value })
                     }
                   ></TextField>
-                </Grid>
-                <h2></h2>
-                <Grid item md={25}>
                   <TextField
                     id="outlined-basic"
                     type="number"
