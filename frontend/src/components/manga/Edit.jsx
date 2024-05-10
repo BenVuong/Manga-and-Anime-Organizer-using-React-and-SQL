@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link, useParams } from "react-router-dom";
+import { Grid, Card, TextField, CardContent } from "@mui/material";
 function Edit() {
   const { id } = useParams();
 
@@ -47,109 +48,124 @@ function Edit() {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div>
-      <div>
-        <form onSubmit={handleUpdate}>
-          <h2>Update Manga</h2>
-          <div className="mb-2">
-            <label htmlFor="">Title</label>
-            <input
-              type="text"
-              placeholder="Enter Title"
-              className="form-control"
-              value={values.name}
-              onChange={(e) => setValues({ ...values, name: e.target.value })}
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Amount collected</label>
-            <input
-              type="number"
-              placeholder="Enter amount"
-              className="form-control"
-              value={values.amountCollected}
-              onChange={(e) =>
-                setValues({ ...values, amountCollected: e.target.value })
-              }
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Total number of volumes</label>
-            <input
-              type="number"
-              placeholder="Enter amount"
-              className="form-control"
-              value={values.volAmount}
-              onChange={(e) =>
-                setValues({ ...values, volAmount: e.target.value })
-              }
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Publisher</label>
-            <input
-              type="text"
-              placeholder="Enter Publisher"
-              className="form-control"
-              value={values.publisher}
-              onChange={(e) =>
-                setValues({ ...values, publisher: e.target.value })
-              }
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Story by</label>
-            <input
-              type="text"
-              placeholder="Story by"
-              className="form-control"
-              value={values.story}
-              onChange={(e) => setValues({ ...values, story: e.target.value })}
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Art by</label>
-            <input
-              type="text"
-              placeholder="Art by"
-              className="form-control"
-              value={values.art}
-              onChange={(e) => setValues({ ...values, art: e.target.value })}
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Enter Synopsis</label>
-            <input
-              type="text"
-              placeholder="Enter Synopsis"
-              className="form-control"
-              value={values.synopsis}
-              onChange={(e) =>
-                setValues({ ...values, synopsis: e.target.value })
-              }
-            />
-          </div>
+    <Grid container justify="center">
+      <Grid item md={3}>
+        <Card alignItems="center" justifyContent="center">
+          <CardContent>
+            <Grid item container alignItems="center" justifyContent="center">
+              <Grid item>
+                <h2>Edit Manga</h2>
+                <h3>Cover Art Preview:</h3>
+                <img src={values.image}></img>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Grid>
 
-          <div className="mb-2">
-            <label htmlFor="">Thumbnail Art</label>
-            <input
-              type="text"
-              placeholder="Enter link to thumbnail art"
-              className="form-control"
-              value={values.image}
-              onChange={(e) => setValues({ ...values, image: e.target.value })}
-            />
-            <img src={values.image}></img>
-          </div>
-
-          <button className="btn btn-success"> Update</button>
-          <Link to="/" className="btn btn-success">
-            {" "}
-            Back
-          </Link>
-        </form>
-      </div>
-    </div>
+      <Grid item md={9}>
+        <Card>
+          <CardContent>
+            <Grid item container>
+              <form onSubmit={handleUpdate}>
+                <h2>Manga Info</h2>
+                <h5>You can manually edit these entries if needed</h5>
+                <button className="btn btn-success"> Submit</button>
+                <Link to="/" className="btn btn-success">
+                  {" "}
+                  Back
+                </Link>
+                <h2></h2>
+                <Grid item md={25}>
+                  <TextField
+                    id="outlined-basic"
+                    InputLabelProps={{ shrink: true }}
+                    value={values.name}
+                    label="Title"
+                    onChange={(e) =>
+                      setValues({ ...values, name: e.target.value })
+                    }
+                  ></TextField>
+                  <TextField
+                    id="outlined-basic"
+                    label="Story by"
+                    value={values.story}
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(e) =>
+                      setValues({ ...values, story: e.target.value })
+                    }
+                  ></TextField>
+                  <TextField
+                    id="outlined-basic"
+                    InputLabelProps={{ shrink: true }}
+                    value={values.art}
+                    label="Art by"
+                    onChange={(e) =>
+                      setValues({ ...values, art: e.target.value })
+                    }
+                  ></TextField>
+                  <h2></h2>
+                  <TextField
+                    id="outlined-basic"
+                    label="Publisher"
+                    value={values.publisher}
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(e) =>
+                      setValues({ ...values, publisher: e.target.value })
+                    }
+                  ></TextField>
+                  <TextField
+                    id="outlined-basic"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    value={values.amountCollected}
+                    label="Volumes Collected"
+                    onChange={(e) =>
+                      setValues({ ...values, amountCollected: e.target.value })
+                    }
+                  ></TextField>
+                  <TextField
+                    id="outlined-basic"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    value={values.volAmount}
+                    label="Total Volume Count"
+                    onChange={(e) =>
+                      setValues({ ...values, volAmount: e.target.value })
+                    }
+                  ></TextField>
+                </Grid>
+                <h2></h2>
+                <Grid item md={20}>
+                  <TextField
+                    id="outlined-basic"
+                    InputLabelProps={{ shrink: true }}
+                    fullWidth
+                    value={values.image}
+                    label="Link to Thumbnail art"
+                    onChange={(e) =>
+                      setValues({ ...values, image: e.target.value })
+                    }
+                  ></TextField>
+                  <h2></h2>
+                  <TextField
+                    id="outlined-multiline-static"
+                    multiline
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    value={values.synopsis}
+                    label="Synopsis"
+                    onChange={(e) =>
+                      setValues({ ...values, synopsis: e.target.value })
+                    }
+                  ></TextField>
+                </Grid>
+              </form>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }
 
