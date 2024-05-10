@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { Grid, Card, InputLabel, TextField, CardContent } from "@mui/material";
 function CreateAnime() {
   const [values, setValues] = useState({
     title: "",
@@ -53,145 +54,169 @@ function CreateAnime() {
       .catch((err) => console.log(err));
   };
   return (
-    <div>
-      <h2>Add Anime</h2>
-      <div>
-        <form onSubmit={handleSearchSubmit}>
-          <div className="mb-2">
-            <label htmlFor="">Search Anime Automatically</label>
-            <input
-              type="text"
-              placeholder="Enter title of an anime and its info will be auto filled "
-              className="form-control"
-              onChange={(e) => setSearchAnimeName(e.target.value)}
-            ></input>
-          </div>
-          <button className="btn btn-success"> Search Anime</button>
-        </form>
+    <Grid container justify="center">
+      <Grid item md={3}>
+        <Card alignItems="center" justifyContent="center">
+          <CardContent>
+            <Grid item container alignItems="center" justifyContent="center">
+              <Grid item>
+                <h2>Add Anime</h2>
+              </Grid>
+              <Grid item>
+                <form onSubmit={handleSearchSubmit}>
+                  <div className="mb-2">
+                    <TextField
+                      id="outlined-basic"
+                      label="Enter in title of an anime"
+                      onChange={(e) => setSearchAnimeName(e.target.value)}
+                      helperText="Once entered its info will be automatically filled out"
+                    ></TextField>
+                  </div>
+                  <button className="btn btn-success"> Search Anime</button>
+                </form>
+              </Grid>
+            </Grid>
+          </CardContent>
+          <img src={values.image}></img>
+        </Card>
+      </Grid>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-2">
-            <label htmlFor="">Title</label>
-            <input
-              type="text"
-              placeholder="Enter Title"
-              className="form-control"
-              value={values.title}
-              onChange={(e) => setValues({ ...values, title: e.target.value })}
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Episodes Watched</label>
-            <input
-              type="number"
-              placeholder="Enter amount"
-              className="form-control"
-              onChange={(e) =>
-                setValues({ ...values, episodesWatched: e.target.value })
-              }
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Episode Count</label>
-            <input
-              type="number"
-              placeholder="Enter amount"
-              className="form-control"
-              value={values.episodeCount}
-              onChange={(e) =>
-                setValues({ ...values, episodeCount: e.target.value })
-              }
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Studio</label>
-            <input
-              type="text"
-              placeholder="Enter in Studio"
-              className="form-control"
-              value={values.studio}
-              onChange={(e) => setValues({ ...values, studio: e.target.value })}
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Type</label>
-            <select
-              name="selectedType"
-              value={values.type}
-              onChange={(e) => setValues({ ...values, type: e.target.value })}
-            >
-              <option value="">Select type</option>
-              <option value="TV">TV</option>
-              <option value="Movie">Movie</option>
-              <option value="OVA">OVA</option>
-              <option value="ONA">ONA</option>
-            </select>
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Synopsis</label>
-            <input
-              type="text"
-              placeholder="Enter Synopsis"
-              className="form-control"
-              value={values.synopsis}
-              onChange={(e) =>
-                setValues({ ...values, synopsis: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="mb-2">
-            <label htmlFor="">Thumbnail Art</label>
-            <input
-              type="text"
-              placeholder="Enter a link to thumbnail art"
-              className="form-control"
-              value={values.image}
-              onChange={(e) => setValues({ ...values, image: e.target.value })}
-            />
-            <img src={values.image}></img>
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Status</label>
-            <select
-              name="selectedStatus"
-              onChange={(e) => setValues({ ...values, status: e.target.value })}
-            >
-              <option value="">Select status</option>
-              <option value="Watching">Watching</option>
-              <option value="Completed">Completed</option>
-              <option value="On-Hold">On-Hold</option>
-              <option value="Dropped">Dropped</option>
-              <option value="Plan to Watch">Plan to Watch</option>
-            </select>
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Score</label>
-            <select
-              name="selectedScore"
-              onChange={(e) => setValues({ ...values, score: e.target.value })}
-            >
-              <option value="">Select Score</option>
-              <option value="10">10 Masterpiece</option>
-              <option value="9">9 Great</option>
-              <option value="8">8 Very Good</option>
-              <option value="7">7 Good</option>
-              <option value="6">6 Fine</option>
-              <option value="5">5 Average</option>
-              <option value="4">4 Bad</option>
-              <option value="3">3 Very Bad</option>
-              <option value="2">2 Horrible</option>
-              <option value="1">1 Appalling </option>
-            </select>
-          </div>
-          <button className="btn btn-success"> Submit</button>
-          <Link to="/animeList" className="btn btn-success">
-            {" "}
-            Back
-          </Link>
-        </form>
-      </div>
-    </div>
+      <Grid item md={9}>
+        <Card>
+          <CardContent>
+            <Grid item container>
+              <form onSubmit={handleSubmit}>
+                <h2>Anime Info</h2>
+                <h5>You can manually edit these entries if needed</h5>
+                <button className="btn btn-success"> Submit</button>
+                <Link to="/animeList" className="btn btn-success">
+                  {" "}
+                  Back
+                </Link>
+                <h2></h2>
+                <Grid item md={25}>
+                  <TextField
+                    id="outlined-basic"
+                    InputLabelProps={{ shrink: true }}
+                    value={values.title}
+                    label="Title"
+                    onChange={(e) =>
+                      setValues({ ...values, title: e.target.value })
+                    }
+                  ></TextField>
+                  <TextField
+                    id="outlined-basic"
+                    label="Studio"
+                    InputLabelProps={{ shrink: true }}
+                    value={values.studio}
+                    onChange={(e) =>
+                      setValues({ ...values, studio: e.target.value })
+                    }
+                  ></TextField>
+                </Grid>
+                <h2></h2>
+                <Grid item md={25}>
+                  <TextField
+                    id="outlined-basic"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    label="Episodes Watched"
+                    onChange={(e) =>
+                      setValues({ ...values, episodesWatched: e.target.value })
+                    }
+                  ></TextField>
+                  <TextField
+                    id="outlined-basic"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    value={values.episodeCount}
+                    label="Episode Count"
+                    onChange={(e) =>
+                      setValues({ ...values, episodeCount: e.target.value })
+                    }
+                  ></TextField>
+                </Grid>
+                <h2></h2>
+                <Grid item md={20}>
+                  <InputLabel>Type</InputLabel>
+                  <select
+                    name="selectedType"
+                    value={values.type}
+                    onChange={(e) =>
+                      setValues({ ...values, type: e.target.value })
+                    }
+                  >
+                    <option value="">Select type</option>
+                    <option value="TV">TV</option>
+                    <option value="Movie">Movie</option>
+                    <option value="OVA">OVA</option>
+                    <option value="ONA">ONA</option>
+                  </select>
+                  <InputLabel>Score</InputLabel>
+                  <select
+                    name="selectedScore"
+                    onChange={(e) =>
+                      setValues({ ...values, score: e.target.value })
+                    }
+                  >
+                    <option value="">Select Score</option>
+                    <option value="10">10 Masterpiece</option>
+                    <option value="9">9 Great</option>
+                    <option value="8">8 Very Good</option>
+                    <option value="7">7 Good</option>
+                    <option value="6">6 Fine</option>
+                    <option value="5">5 Average</option>
+                    <option value="4">4 Bad</option>
+                    <option value="3">3 Very Bad</option>
+                    <option value="2">2 Horrible</option>
+                    <option value="1">1 Appalling </option>
+                  </select>
+                  <InputLabel>Status</InputLabel>
+                  <select
+                    name="selectedStatus"
+                    onChange={(e) =>
+                      setValues({ ...values, status: e.target.value })
+                    }
+                  >
+                    <option value="">Select status</option>
+                    <option value="Watching">Watching</option>
+                    <option value="Completed">Completed</option>
+                    <option value="On-Hold">On-Hold</option>
+                    <option value="Dropped">Dropped</option>
+                    <option value="Plan to Watch">Plan to Watch</option>
+                  </select>
+                </Grid>
+                <h2></h2>
+                <Grid item md={20}>
+                  <TextField
+                    id="outlined-basic"
+                    InputLabelProps={{ shrink: true }}
+                    fullWidth
+                    value={values.image}
+                    label="Link to Thumbnail art"
+                    onChange={(e) =>
+                      setValues({ ...values, image: e.target.value })
+                    }
+                  ></TextField>
+                  <h2></h2>
+                  <TextField
+                    id="outlined-multiline-static"
+                    multiline
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    value={values.synopsis}
+                    label="Synopsis"
+                    onChange={(e) =>
+                      setValues({ ...values, synopsis: e.target.value })
+                    }
+                  ></TextField>
+                </Grid>
+              </form>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }
 
