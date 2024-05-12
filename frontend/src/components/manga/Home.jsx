@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Box, Modal, Typography, alpha } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 function Home() {
   const [data, setData] = useState([]);
   const [mangaName, setMangaName] = useState("");
@@ -94,44 +94,41 @@ function Home() {
                     >
                       {" "}
                       Delete
-                      <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box sx={style}>
-                          <Typography
-                            id="modal-modal-title"
-                            variant="h6"
-                            component="h2"
-                          >
-                            Are you sure you want to delete {mangaName} from
-                            your list?
-                          </Typography>
-                          <Typography
-                            id="modal-modal-description"
-                            sx={{ mt: 2 }}
-                          >
-                            <button
-                              onClick={() => handleDelete(mangaID)}
-                              className="btn btn-danger"
-                            >
-                              {" "}
-                              Yes I am Sure
-                            </button>
-
-                            <button
-                              onClick={() => setOpen(false)}
-                              className="btn btn-success"
-                            >
-                              {" "}
-                              No
-                            </button>
-                          </Typography>
-                        </Box>
-                      </Modal>
                     </button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={style}>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          Are you sure you want to delete {mangaName} from your
+                          list?
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          <button
+                            onClick={() => handleDelete(mangaID)}
+                            className="btn btn-danger"
+                          >
+                            {" "}
+                            Yes I am Sure
+                          </button>
+
+                          <button
+                            onClick={() => window.location.reload()}
+                            className="btn btn-success"
+                          >
+                            {" "}
+                            No
+                          </button>
+                        </Typography>
+                      </Box>
+                    </Modal>
                   </td>
                 </tr>
               );

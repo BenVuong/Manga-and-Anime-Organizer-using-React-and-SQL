@@ -4,8 +4,15 @@ import { Link } from "react-router-dom";
 import { Box, Modal, Typography } from "@mui/material";
 function AnimeList() {
   const [data, setData] = useState([]);
+  const [animeName, setAnimeName] = useState("");
+  const [animeID, setAnimeID] = useState();
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
+  const handleOpen = (showName, showID) => {
+    setAnimeID(showID);
+    setAnimeName(showName);
+    setOpen(true);
+  };
   useEffect(() => {
     axios
       .get("http://localhost:8081/animelist")
@@ -85,9 +92,10 @@ function AnimeList() {
                       Edit
                     </Link>
                     <button
-                      onClick={() => setOpen(true)}
+                      onClick={() => handleOpen(anime.title, anime.id)}
                       className="btn btn-danger"
                     >
+                      {""}
                       Delete
                     </button>
                     <Modal
@@ -102,12 +110,12 @@ function AnimeList() {
                           variant="h6"
                           component="h2"
                         >
-                          Are you sure you want to delete {anime.title} from
-                          your list?
+                          Are you sure you want to delete {animeName} from your
+                          list?
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                           <button
-                            onClick={() => handleDelete(anime.id)}
+                            onClick={() => handleDelete(animeID)}
                             className="btn btn-danger"
                           >
                             {" "}
@@ -115,7 +123,7 @@ function AnimeList() {
                           </button>
 
                           <button
-                            onClick={() => handleClose()}
+                            onClick={() => window.location.reload()}
                             className="btn btn-success"
                           >
                             {" "}
