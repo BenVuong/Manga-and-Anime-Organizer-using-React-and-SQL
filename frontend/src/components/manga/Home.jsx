@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Box, Modal, Typography, alpha } from "@mui/material";
 function Home() {
   const [data, setData] = useState([]);
+  const [mangaName, setMangaName] = useState("");
+  const [mangaID, setMangaID] = useState();
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const handleOpen = (bookName, bookID) => {
+    setMangaID(bookID);
+    setMangaName(bookName);
+    setOpen(true);
+  };
   useEffect(() => {
     axios
       .get("http://localhost:8081/")
@@ -17,6 +27,18 @@ function Home() {
         window.location.reload();
       })
       .catch((err) => console.log(err));
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
   };
 
   return (
@@ -67,11 +89,48 @@ function Home() {
                       Edit
                     </Link>
                     <button
-                      onClick={() => handleDelete(book.id)}
+                      onClick={() => handleOpen(book.name, book.id)}
                       className="btn btn-danger"
                     >
                       {" "}
                       Delete
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
+                          <Typography
+                            id="modal-modal-title"
+                            variant="h6"
+                            component="h2"
+                          >
+                            Are you sure you want to delete {mangaName} from
+                            your list?
+                          </Typography>
+                          <Typography
+                            id="modal-modal-description"
+                            sx={{ mt: 2 }}
+                          >
+                            <button
+                              onClick={() => handleDelete(mangaID)}
+                              className="btn btn-danger"
+                            >
+                              {" "}
+                              Yes I am Sure
+                            </button>
+
+                            <button
+                              onClick={() => setOpen(false)}
+                              className="btn btn-success"
+                            >
+                              {" "}
+                              No
+                            </button>
+                          </Typography>
+                        </Box>
+                      </Modal>
                     </button>
                   </td>
                 </tr>
