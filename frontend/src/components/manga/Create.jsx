@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { Grid, Card, TextField, CardContent } from "@mui/material";
+import { Grid, Card, TextField, CardContent, InputLabel } from "@mui/material";
 function Create() {
   const [values, setValues] = useState({
     title: "",
@@ -13,6 +13,8 @@ function Create() {
     art: "",
     synopsis: "",
     image: "",
+    score: "",
+    status: "",
   });
   const navigate = useNavigate();
   const [searchMangaName, setSearchMangaName] = useState();
@@ -173,6 +175,39 @@ function Create() {
                       setValues({ ...values, synopsis: e.target.value })
                     }
                   ></TextField>
+                  <InputLabel>Score</InputLabel>
+                  <select
+                    name="selectedScore"
+                    onChange={(e) =>
+                      setValues({ ...values, score: e.target.value })
+                    }
+                  >
+                    <option value="">Select Score</option>
+                    <option value="10">10 Masterpiece</option>
+                    <option value="9">9 Great</option>
+                    <option value="8">8 Very Good</option>
+                    <option value="7">7 Good</option>
+                    <option value="6">6 Fine</option>
+                    <option value="5">5 Average</option>
+                    <option value="4">4 Bad</option>
+                    <option value="3">3 Very Bad</option>
+                    <option value="2">2 Horrible</option>
+                    <option value="1">1 Appalling </option>
+                  </select>
+                  <InputLabel>Status</InputLabel>
+                  <select
+                    name="selectedStatus"
+                    onChange={(e) =>
+                      setValues({ ...values, status: e.target.value })
+                    }
+                  >
+                    <option value="">Select status</option>
+                    <option value="Watching">Reading</option>
+                    <option value="Completed">Completed</option>
+                    <option value="On-Hold">On-Hold</option>
+                    <option value="Dropped">Dropped</option>
+                    <option value="Plan to Watch">Plan to Read</option>
+                  </select>
                 </Grid>
               </form>
             </Grid>

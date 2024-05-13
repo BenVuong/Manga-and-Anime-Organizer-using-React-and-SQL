@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import { Grid, Card, TextField, CardContent } from "@mui/material";
+import { Grid, Card, TextField, CardContent, InputLabel } from "@mui/material";
 function Edit() {
   const { id } = useParams();
 
@@ -43,6 +43,8 @@ function Edit() {
           art: res.data[0].art,
           synopsis: res.data[0].synopsis,
           image: res.data[0].image,
+          score: res.data[0].score,
+          status: res.data[0].status,
         });
       })
       .catch((err) => console.log(err));
@@ -159,6 +161,41 @@ function Edit() {
                       setValues({ ...values, synopsis: e.target.value })
                     }
                   ></TextField>
+                  <InputLabel>Score</InputLabel>
+                  <select
+                    name="selectedScore"
+                    value={values.score}
+                    onChange={(e) =>
+                      setValues({ ...values, score: e.target.value })
+                    }
+                  >
+                    <option value="">Select Score</option>
+                    <option value="10">10 Masterpiece</option>
+                    <option value="9">9 Great</option>
+                    <option value="8">8 Very Good</option>
+                    <option value="7">7 Good</option>
+                    <option value="6">6 Fine</option>
+                    <option value="5">5 Average</option>
+                    <option value="4">4 Bad</option>
+                    <option value="3">3 Very Bad</option>
+                    <option value="2">2 Horrible</option>
+                    <option value="1">1 Appalling </option>
+                  </select>
+                  <InputLabel>Status</InputLabel>
+                  <select
+                    name="selectedStatus"
+                    value={values.status}
+                    onChange={(e) =>
+                      setValues({ ...values, status: e.target.value })
+                    }
+                  >
+                    <option value="">Select status</option>
+                    <option value="Reading">Reading</option>
+                    <option value="Completed">Completed</option>
+                    <option value="On-Hold">On-Hold</option>
+                    <option value="Dropped">Dropped</option>
+                    <option value="Plan to Read">Plan to Read</option>
+                  </select>
                 </Grid>
               </form>
             </Grid>
