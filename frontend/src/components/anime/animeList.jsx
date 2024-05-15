@@ -78,14 +78,14 @@ function AnimeList() {
                   </td>
                   <td>
                     <Link
-                      className="btn btn-outline-dark "
+                      className="btn btn-info "
                       role="button"
                       to={`/readanime/${anime.id}`}
                     >
                       Details
                     </Link>
                     <Link
-                      className="btn btn-outline-dark "
+                      className="btn btn-success  "
                       role="button"
                       to={`/editanime/${anime.id}`}
                     >
