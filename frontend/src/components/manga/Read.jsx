@@ -58,7 +58,7 @@ function Read() {
         <Grid xs={12} sm={2}>
           <Pillar>
             <Item>
-              <img src={book.image} />
+              <img src={book.image} style={{ maxWidth: "100%" }} />
               <Item> Information:</Item>
               <Divider />
               <Item>Volumes: {book.volAmount}</Item>

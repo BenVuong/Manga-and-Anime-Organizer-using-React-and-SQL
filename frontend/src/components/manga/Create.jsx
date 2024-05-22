@@ -73,7 +73,7 @@ function Create() {
                   </div>
                   <button className="btn btn-success"> Search Manga</button>
                   <h3>Cover Art Preview:</h3>
-                  <img src={values.image}></img>
+                  <img src={values.image} style={{ maxWidth: "100%" }}></img>
                 </form>
               </Grid>
             </Grid>
@@ -202,11 +202,11 @@ function Create() {
                     }
                   >
                     <option value="">Select status</option>
-                    <option value="Watching">Reading</option>
+                    <option value="Reading">Reading</option>
                     <option value="Completed">Completed</option>
                     <option value="On-Hold">On-Hold</option>
                     <option value="Dropped">Dropped</option>
-                    <option value="Plan to Watch">Plan to Read</option>
+                    <option value="Plan to Read">Plan to Read</option>
                   </select>
                 </Grid>
               </form>

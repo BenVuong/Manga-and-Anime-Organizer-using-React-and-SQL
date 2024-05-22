@@ -59,7 +59,7 @@ function EditAnime() {
               <Grid item>
                 <h2>Edit Anime</h2>
                 <h3>Cover Art Preview:</h3>
-                <img src={values.image}></img>
+                <img src={values.image} style={{ maxWidth: "100%" }}></img>
               </Grid>
             </Grid>
           </CardContent>

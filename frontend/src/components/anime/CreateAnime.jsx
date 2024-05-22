@@ -74,7 +74,7 @@ function CreateAnime() {
                   </div>
                   <button className="btn btn-success"> Search Anime</button>
                   <h3>Cover Art Preview:</h3>
-                  <img src={values.image}></img>
+                  <img src={values.image} style={{ maxWidth: "100%" }}></img>
                 </form>
               </Grid>
             </Grid>

@@ -58,7 +58,7 @@ function AnimeDetails() {
         <Grid xs={15} sm={2}>
           <Pillar>
             <Item>
-              <img src={anime.image} />
+              <img src={anime.image} style={{ maxWidth: "100%" }} />
             </Item>
             <Item>
               Information:
