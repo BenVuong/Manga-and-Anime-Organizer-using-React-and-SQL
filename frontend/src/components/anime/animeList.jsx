@@ -68,7 +68,7 @@ function AnimeList() {
             </tr>
           </thead>
           <tbody>
-            {data.map((anime, index) => {
+            {data?.map((anime, index) => {
               return (
                 <tr key={index}>
                   <td> {anime.title}</td>

@@ -65,7 +65,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {data.map((book, index) => {
+            {data?.map((book, index) => {
               return (
                 <tr key={index}>
                   <td> {book.name}</td>

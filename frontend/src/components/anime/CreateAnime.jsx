@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Grid, Card, InputLabel, TextField, CardContent } from "@mui/material";
+const debounce = (func, delay) => {
+  let timeOutID;
+  const debouncedFunction = (...args) => {
+    if (timeOutID) {
+      clearTimeout(timeOutID);
+    }
+    timeOutID = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+
+  debouncedFunction.cancel = () => {
+    if (timeOutID) {
+      clearTimeout(timeOutID);
+    }
+  };
+  return debouncedFunction;
+};
 function CreateAnime() {
   const [values, setValues] = useState({
     title: "",
@@ -16,31 +34,41 @@ function CreateAnime() {
     studio: "",
   });
   const [searchAnimeName, setSearchAnimeName] = useState("");
-
+  const [serachAnimeID, setSearchAnimeID] = useState();
+  const [listOfAnime, setListOfAnime] = useState([]);
   const API_URL = "https://api.jikan.moe/v4";
-  async function searchAnime(search) {
-    const response = await fetch(`${API_URL}/anime?q=${search}`);
-    const animeData = await response.json();
-    console.log(animeData.data[0]);
-    setValues({
-      ...values,
-      title: animeData.data[0].title_english,
-      episodeCount: animeData.data[0].episodes,
-      synopsis: animeData.data[0].synopsis,
-      image: animeData.data[0].images.jpg.image_url,
-      type: animeData.data[0].type,
-      studio: animeData.data[0].studios[0].name,
-    });
-  }
+  const searchAnime = async (search) => {
+    if (search.length === 0) {
+      setListOfAnime([]);
+    }
 
+    try {
+      const response = await fetch(`${API_URL}/anime?q=${search}`);
+      const animeData = await response.json();
+      console.log(animeData.data);
+      setListOfAnime(animeData.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const debounceSearch = useCallback(debounce(searchAnime, 100), []);
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    const { value } = e.target;
+    debounceSearch(value);
+  };
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchAnimeName === "") {
     } else {
       searchAnime(searchAnimeName);
     }
+  };
+  const handleAddSubmit = (e) => {
+    e.preventDefault();
+    console.log(serachAnimeID);
   };
 
   const handleSubmit = (e) => {
@@ -63,19 +91,28 @@ function CreateAnime() {
                 <h2>Add Anime</h2>
               </Grid>
               <Grid item>
-                <form onSubmit={handleSearchSubmit}>
-                  <div className="mb-2">
-                    <TextField
-                      id="outlined-basic"
-                      label="Enter in title of an anime"
-                      onChange={(e) => setSearchAnimeName(e.target.value)}
-                      helperText="Once entered its info will be automatically filled out"
-                    ></TextField>
-                  </div>
-                  <button className="btn btn-success"> Search Anime</button>
-                  <h3>Cover Art Preview:</h3>
-                  <img src={values.image} style={{ maxWidth: "100%" }}></img>
-                </form>
+                <div className="mb-2">
+                  <TextField
+                    id="outlined-basic"
+                    label="Enter in title of an anime"
+                    onChange={handleChange}
+                    helperText="Once entered its info will be automatically filled out"
+                  ></TextField>
+                </div>
+                <button className="btn btn-success"> Search Anime</button>
+
+                <h3>Cover Art Preview:</h3>
+                <img src={values.image} style={{ maxWidth: "100%" }}></img>
+
+                <div>
+                  {listOfAnime?.map((anime) => {
+                    return (
+                      <div>
+                        {anime.title_english} <button>Add</button>
+                      </div>
+                    );
+                  })}
+                </div>
               </Grid>
             </Grid>
           </CardContent>
