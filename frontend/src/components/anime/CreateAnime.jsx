@@ -33,8 +33,7 @@ function CreateAnime() {
     status: "",
     studio: "",
   });
-  const [searchAnimeName, setSearchAnimeName] = useState("");
-  const [serachAnimeID, setSearchAnimeID] = useState();
+
   const [listOfAnime, setListOfAnime] = useState([]);
   const API_URL = "https://api.jikan.moe/v4";
   const searchAnime = async (search) => {
@@ -52,23 +51,27 @@ function CreateAnime() {
     }
   };
 
-  const debounceSearch = useCallback(debounce(searchAnime, 100), []);
+  async function getAnimeInfo(id) {
+    const response = await fetch(`${API_URL}/anime/${id}`);
+    const animeData = await response.json();
+    console.log(animeData.data);
+    setValues({
+      ...values,
+      title: animeData.data.title_english,
+      episodeCount: animeData.data.episodes,
+      synopsis: animeData.data.synopsis,
+      image: animeData.data.images.jpg.image_url,
+      type: animeData.data.type,
+      studio: animeData.data.studios[0].name,
+    });
+  }
+
+  const debounceSearch = useCallback(debounce(searchAnime, 300), []);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { value } = e.target;
     debounceSearch(value);
-  };
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchAnimeName === "") {
-    } else {
-      searchAnime(searchAnimeName);
-    }
-  };
-  const handleAddSubmit = (e) => {
-    e.preventDefault();
-    console.log(serachAnimeID);
   };
 
   const handleSubmit = (e) => {
@@ -104,15 +107,19 @@ function CreateAnime() {
                 <h3>Cover Art Preview:</h3>
                 <img src={values.image} style={{ maxWidth: "100%" }}></img>
 
-                <div>
-                  {listOfAnime?.map((anime) => {
-                    return (
-                      <div>
-                        {anime.title_english} <button>Add</button>
-                      </div>
-                    );
-                  })}
-                </div>
+                {listOfAnime?.map((anime) => {
+                  return (
+                    <div>
+                      {anime.title_english}{" "}
+                      <button
+                        onClick={() => getAnimeInfo(anime.mal_id)}
+                        value={anime.mal_id}
+                      >
+                        Add
+                      </button>
+                    </div>
+                  );
+                })}
               </Grid>
             </Grid>
           </CardContent>
