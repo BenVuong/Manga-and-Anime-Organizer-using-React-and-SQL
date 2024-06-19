@@ -111,11 +111,9 @@ function CreateAnime() {
                   ></TextField>
                 </div>
 
-                <h3>Cover Art Preview:</h3>
-                <img src={values.image} style={{ maxWidth: "100%" }}></img>
                 <Divider />
               </Grid>
-              <Grid container style={{ height: "900px", overflowY: "auto" }}>
+              <Grid container style={{ height: "750px", overflowY: "auto" }}>
                 {listOfAnime?.map((anime) => {
                   return (
                     <div>
@@ -245,7 +243,9 @@ function CreateAnime() {
                     <option value="Plan to Watch">Plan to Watch</option>
                   </select>
                 </Grid>
-                <h2></h2>
+                <h2>
+                  <img src={values.image} style={{ maxWidth: "100%" }}></img>
+                </h2>
                 <Grid item md={20}>
                   <TextField
                     id="outlined-basic"
