@@ -2,7 +2,14 @@ import React, { useCallback } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { Grid, Card, InputLabel, TextField, CardContent } from "@mui/material";
+import {
+  Grid,
+  Card,
+  InputLabel,
+  TextField,
+  CardContent,
+  Divider,
+} from "@mui/material";
 const debounce = (func, delay) => {
   let timeOutID;
   const debouncedFunction = (...args) => {
@@ -39,6 +46,7 @@ function CreateAnime() {
   const searchAnime = async (search) => {
     if (search.length === 0) {
       setListOfAnime([]);
+      return;
     }
 
     try {
@@ -99,24 +107,33 @@ function CreateAnime() {
                     id="outlined-basic"
                     label="Enter in title of an anime"
                     onChange={handleChange}
-                    helperText="Once entered its info will be automatically filled out"
+                    helperText="Enter in a title to get a list of resulting searches"
                   ></TextField>
                 </div>
-                <button className="btn btn-success"> Search Anime</button>
 
                 <h3>Cover Art Preview:</h3>
                 <img src={values.image} style={{ maxWidth: "100%" }}></img>
-
+                <Divider />
+              </Grid>
+              <Grid container style={{ height: "900px", overflowY: "auto" }}>
                 {listOfAnime?.map((anime) => {
                   return (
                     <div>
-                      {anime.title_english}{" "}
-                      <button
-                        onClick={() => getAnimeInfo(anime.mal_id)}
-                        value={anime.mal_id}
-                      >
-                        Add
-                      </button>
+                      <Grid item>
+                        {" "}
+                        <img src={anime.images.jpg.image_url}></img>
+                      </Grid>
+                      <Grid item>
+                        <button
+                          onClick={() => getAnimeInfo(anime.mal_id)}
+                          value={anime.mal_id}
+                        >
+                          {anime.title_english
+                            ? anime.title_english
+                            : anime.title}
+                        </button>
+                        <Divider />
+                      </Grid>
                     </div>
                   );
                 })}
