@@ -9,7 +9,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "books",
+  database: "tracker",
 });
 
 //sql query to get entries of from the book table
