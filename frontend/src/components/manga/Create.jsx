@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { Grid, Card, TextField, CardContent, InputLabel } from "@mui/material";
+import {
+  Grid,
+  Card,
+  TextField,
+  CardContent,
+  InputLabel,
+  Divider,
+} from "@mui/material";
+
+const debounce = (func, delay) => {
+  let timeOutID;
+  const debouncedFunction = (...args) => {
+    if (timeOutID) {
+      clearTimeout(timeOutID);
+    }
+    timeOutID = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+
+  debouncedFunction.cancel = () => {
+    if (timeOutID) {
+      clearTimeout(timeOutID);
+    }
+  };
+  return debouncedFunction;
+};
+
 function Create() {
   const [values, setValues] = useState({
     title: "",
@@ -17,31 +44,46 @@ function Create() {
     status: "",
   });
   const navigate = useNavigate();
-  const [searchMangaName, setSearchMangaName] = useState();
+  const [listOfManga, setListOfManga] = useState([]);
   const API_URL = "https://api.jikan.moe/v4";
-  async function searchManga(search) {
-    const response = await fetch(`${API_URL}/manga?q=${search}`);
-    const mangaData = await response.json();
-    console.log(mangaData.data[0]);
-    setValues({
-      ...values,
-      title: mangaData.data[0].title_english,
-      totalVolumes: mangaData.data[0].volumes,
-      story: mangaData.data[0].authors[0].name,
-      art: mangaData.data[0].authors[0].name,
-      synopsis: mangaData.data[0].synopsis,
-      image: mangaData.data[0].images.jpg.image_url,
-    });
-  }
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchMangaName === "") {
-    } else {
-      searchManga(searchMangaName);
+  const searchManga = async (search) => {
+    if (search === 0) {
+      setListOfManga([]);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/manga?q=${search}`);
+      const mangaData = await response.json();
+      console.log(mangaData.data);
+      setListOfManga(mangaData.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
+  async function getMangaInfo(id) {
+    const response = await fetch(`${API_URL}/manga/${id}`);
+    const mangaData = await response.json();
+    console.log(mangaData.data);
+    setValues({
+      ...values,
+      title: mangaData.data.title_english,
+      totalVolumes: mangaData.data.volumes,
+      story: mangaData.data.authors[0].name,
+      art: mangaData.data.authors[0].name,
+      synopsis: mangaData.data.synopsis,
+      image: mangaData.data.images.jpg.image_url,
+    });
+  }
+
+  const debounceSearch = useCallback(debounce(searchManga, 300), []);
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    debounceSearch(value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -62,19 +104,37 @@ function Create() {
                 <h2>Add Manga</h2>
               </Grid>
               <Grid item>
-                <form onSubmit={handleSearchSubmit}>
-                  <div className="mb-2">
-                    <TextField
-                      id="outlined-basic"
-                      label="Enter in title of manga"
-                      onChange={(e) => setSearchMangaName(e.target.value)}
-                      helperText="Once entered its info will be automatically filled out"
-                    ></TextField>
-                  </div>
-                  <button className="btn btn-success"> Search Manga</button>
-                  <h3>Cover Art Preview:</h3>
-                  <img src={values.image} style={{ maxWidth: "100%" }}></img>
-                </form>
+                <div className="mb-2">
+                  <TextField
+                    id="outlined-basic"
+                    label="Enter in title of manga"
+                    onChange={handleChange}
+                    helperText="Once entered its info will be automatically filled out"
+                  ></TextField>
+                </div>
+                <Divider />
+                <Grid container style={{ height: "750px", overflowY: "auto" }}>
+                  {listOfManga?.map((manga) => {
+                    return (
+                      <div>
+                        <Grid item>
+                          {""}
+                          <img src={manga.images.jpg.image_url}></img>
+                        </Grid>
+                        <Grid item>
+                          <button
+                            onClick={() => getMangaInfo(manga.mal_id)}
+                            value={manga.mal_id}
+                          >
+                            {manga.title_english
+                              ? manga.title_english
+                              : manga.title}
+                          </button>
+                        </Grid>
+                      </div>
+                    );
+                  })}
+                </Grid>
               </Grid>
             </Grid>
           </CardContent>
@@ -163,7 +223,9 @@ function Create() {
                       setValues({ ...values, image: e.target.value })
                     }
                   ></TextField>
-                  <h2></h2>
+                  <h2>
+                    <img src={values.image} style={{ maxWidth: "100%" }}></img>
+                  </h2>
                   <TextField
                     id="outlined-multiline-static"
                     multiline
