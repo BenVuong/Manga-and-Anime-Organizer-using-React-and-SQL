@@ -48,7 +48,7 @@ function Create() {
   const API_URL = "https://api.jikan.moe/v4";
 
   const searchManga = async (search) => {
-    if (search === 0) {
+    if (search.length === 0) {
       setListOfManga([]);
       return;
     }
@@ -211,7 +211,9 @@ function Create() {
                     }
                   ></TextField>
                 </Grid>
-                <h2></h2>
+                <h2>
+                  <img src={values.image} style={{ maxWidth: "100%" }}></img>
+                </h2>
                 <Grid item md={20}>
                   <TextField
                     id="outlined-basic"
@@ -223,9 +225,6 @@ function Create() {
                       setValues({ ...values, image: e.target.value })
                     }
                   ></TextField>
-                  <h2>
-                    <img src={values.image} style={{ maxWidth: "100%" }}></img>
-                  </h2>
                   <TextField
                     id="outlined-multiline-static"
                     multiline
