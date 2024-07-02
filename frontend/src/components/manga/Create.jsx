@@ -109,7 +109,7 @@ function Create() {
                     id="outlined-basic"
                     label="Enter in title of manga"
                     onChange={handleChange}
-                    helperText="Once entered its info will be automatically filled out"
+                    helperText="Enter in a title to get a list of resulting searches"
                   ></TextField>
                 </div>
                 <Divider />

@@ -63,15 +63,27 @@ function CreateAnime() {
     const response = await fetch(`${API_URL}/anime/${id}`);
     const animeData = await response.json();
     console.log(animeData.data);
-    setValues({
-      ...values,
-      title: animeData.data.title_english,
-      episodeCount: animeData.data.episodes,
-      synopsis: animeData.data.synopsis,
-      image: animeData.data.images.jpg.image_url,
-      type: animeData.data.type,
-      studio: animeData.data.studios[0].name,
-    });
+    if (animeData.data.title_english === null) {
+      setValues({
+        ...values,
+        title: animeData.data.title,
+        episodeCount: animeData.data.episodes,
+        synopsis: animeData.data.synopsis,
+        image: animeData.data.images.jpg.image_url,
+        type: animeData.data.type,
+        studio: animeData.data.studios[0].name,
+      });
+    } else {
+      setValues({
+        ...values,
+        title: animeData.data.title_english,
+        episodeCount: animeData.data.episodes,
+        synopsis: animeData.data.synopsis,
+        image: animeData.data.images.jpg.image_url,
+        type: animeData.data.type,
+        studio: animeData.data.studios[0].name,
+      });
+    }
   }
 
   const debounceSearch = useCallback(debounce(searchAnime, 300), []);
