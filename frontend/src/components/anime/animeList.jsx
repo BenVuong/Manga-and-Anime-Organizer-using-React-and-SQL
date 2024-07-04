@@ -72,28 +72,16 @@ function AnimeList() {
           <button>Completed</button>
         </AccordionDetails>
       </Accordion>
-      <div className="p-3 mb-2 bg-secondary text-white">
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Watch Progress</th>
-            </tr>
-          </thead>
-          <tbody>
-            <AnimeListDisplay
-              data={data}
-              handleOpen={handleOpen}
-              open={open}
-              handleClose={handleClose}
-              style={style}
-              animeName={animeName}
-              handleDelete={handleDelete}
-              animeID={animeID}
-            />
-          </tbody>
-        </table>
-      </div>
+      <AnimeListDisplay
+        data={data}
+        handleOpen={handleOpen}
+        open={open}
+        handleClose={handleClose}
+        style={style}
+        animeName={animeName}
+        handleDelete={handleDelete}
+        animeID={animeID}
+      />
     </div>
   );
 }
