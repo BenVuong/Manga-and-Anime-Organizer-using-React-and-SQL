@@ -51,7 +51,7 @@ app.get("/readanime/:id", (req, res) => {
 //sql query to insert new entry into the book table
 app.post("/book", (req, res) => {
   const sql =
-    "INSERT INTO book (`name`,`amountCollected`,`volAmount`, `publisher`, `story`, `art`, `synopsis`, `image`, `score`, `status`) VALUES (?)";
+    "INSERT INTO book (`name`,`amountCollected`,`volAmount`, `publisher`, `story`, `art`, `synopsis`, `image`, `score`, `status`, `notes`) VALUES (?)";
   const values = [
     req.body.title,
     req.body.amountCollected,
@@ -63,6 +63,7 @@ app.post("/book", (req, res) => {
     req.body.image,
     req.body.score,
     req.body.status,
+    req.body.notes,
   ];
   db.query(sql, [values], (err, result) => {
     if (err) return res.json(err);
@@ -92,7 +93,7 @@ app.post("/anime", (req, res) => {
 
 app.put("/edit/:id", (req, res) => {
   const sql =
-    "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=?, `publisher`=?, `story`=?, `art`=?, `synopsis`=?, `image`=?, `score`=?, `status`=?  WHERE id=?";
+    "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=?, `publisher`=?, `story`=?, `art`=?, `synopsis`=?, `image`=?, `score`=?, `status`=?, `notes`=?  WHERE id=?";
   const id = req.params.id;
   db.query(
     sql,
@@ -107,6 +108,7 @@ app.put("/edit/:id", (req, res) => {
       req.body.image,
       req.body.score,
       req.body.status,
+      req.body.notes,
       id,
     ],
     (err, result) => {
@@ -160,5 +162,5 @@ app.delete("/deleteanime/:id", (req, res) => {
 });
 
 app.listen(8081, () => {
-  console.log("listeing");
+  console.log("listening");
 });

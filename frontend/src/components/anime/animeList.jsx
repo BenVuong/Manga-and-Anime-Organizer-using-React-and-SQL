@@ -2,17 +2,12 @@ import { AnimeListDisplay } from "./animeListDisplay";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {
-  Box,
-  Modal,
-  Typography,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-} from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 function AnimeList() {
   const [data, setData] = useState([]);
   const [animeName, setAnimeName] = useState("");
+  const [arrayOfAnime, setArrayOfAnime] = useState([]);
+  const [animeFilterStatus, setAnimeFilterStatus] = useState("");
   const [animeID, setAnimeID] = useState();
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -27,7 +22,14 @@ function AnimeList() {
       .then((res) => setData(res.data))
       .then(console.log(data))
       .catch((err) => console.log(err));
+    setArrayOfAnime(data);
+    console.log(arrayOfAnime);
   }, []);
+
+  const filterStatus = (data, value) => {
+    if (value === "clear") {
+    }
+  };
 
   const handleDelete = (id) => {
     axios
@@ -82,6 +84,7 @@ function AnimeList() {
         handleDelete={handleDelete}
         animeID={animeID}
       />
+      <div></div>
     </div>
   );
 }

@@ -42,6 +42,7 @@ function Create() {
     image: "",
     score: "",
     status: "",
+    notes: "",
   });
   const navigate = useNavigate();
   const [listOfManga, setListOfManga] = useState([]);
@@ -269,6 +270,23 @@ function Create() {
                     <option value="Dropped">Dropped</option>
                     <option value="Plan to Read">Plan to Read</option>
                   </select>
+                  <h2></h2>
+                  <TextField
+                    id="outlined-multiline-static"
+                    multiline
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    label="Notes"
+                    onChange={(e) =>
+                      setValues({ ...values, notes: e.target.value })
+                    }
+                  ></TextField>
+                  {/* Feature addition idea 
+                      have each manga volume be its own check box 
+                      check can be independently checked out to show
+                      that the user has collected
+                      Would work better for a user who is collecting manga out of order
+                      currently the notes sections has been made as a placeholder for this feature */}
                 </Grid>
               </form>
             </Grid>

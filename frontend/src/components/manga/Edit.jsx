@@ -14,6 +14,7 @@ function Edit() {
     story: "",
     art: "",
     synopsis: "",
+    notes: "",
   });
   const navigate = useNavigate();
 
@@ -45,6 +46,7 @@ function Edit() {
           image: res.data[0].image,
           score: res.data[0].score,
           status: res.data[0].status,
+          notes: res.data[0].notes,
         });
       })
       .catch((err) => console.log(err));
@@ -196,6 +198,18 @@ function Edit() {
                     <option value="Dropped">Dropped</option>
                     <option value="Plan to Read">Plan to Read</option>
                   </select>
+                  <h2></h2>
+                  <TextField
+                    id="outlined-multiline-static"
+                    multiline
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    value={values.notes}
+                    label="Notes"
+                    onChange={(e) =>
+                      setValues({ ...values, notes: e.target.value })
+                    }
+                  ></TextField>
                 </Grid>
               </form>
             </Grid>

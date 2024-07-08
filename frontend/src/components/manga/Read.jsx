@@ -91,6 +91,11 @@ function Read() {
             <Divider />
             {book.synopsis}
           </Item>
+          <Item>
+            Notes:
+            <Divider />
+            {book.notes}
+          </Item>
         </Grid>
       </Grid>
     </Box>
