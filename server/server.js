@@ -93,7 +93,7 @@ app.post("/anime", (req, res) => {
 
 app.put("/edit/:id", (req, res) => {
   const sql =
-    "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=?, `publisher`=?, `story`=?, `art`=?, `synopsis`=?, `image`=?, `score`=?, `status`=?, `notes`=?  WHERE id=?";
+    "UPDATE book SET `name`=?, `amountCollected`=?, `volAmount`=?, `publisher`=?, `story`=?, `art`=?, `synopsis`=?, `image`=?, `score`=?, `status`=?, `notes`=?, `list`=?  WHERE id=?";
   const id = req.params.id;
   db.query(
     sql,
@@ -109,6 +109,7 @@ app.put("/edit/:id", (req, res) => {
       req.body.score,
       req.body.status,
       req.body.notes,
+      req.body.list,
       id,
     ],
     (err, result) => {

@@ -6,6 +6,7 @@ import { Grid, Card, TextField, CardContent, InputLabel } from "@mui/material";
 function Edit() {
   const { id } = useParams();
 
+  const [CheckBoxList, setCheckBoxList] = useState([]);
   const [values, setValues] = useState({
     name: "",
     amountCollected: "",
@@ -15,12 +16,17 @@ function Edit() {
     art: "",
     synopsis: "",
     notes: "",
-    checkBoxList: [],
+    list: "",
   });
   const navigate = useNavigate();
 
   const handleUpdate = (event) => {
     event.preventDefault();
+    setValues({
+      ...values,
+
+      list: JSON.stringify(CheckBoxList),
+    });
     axios
       .put("http://localhost:8081/edit/" + id, values)
       .then((res) => {
@@ -49,24 +55,30 @@ function Edit() {
           score: res.data[0].score,
           status: res.data[0].status,
           notes: res.data[0].notes,
+          list: res.data[0].list,
         });
       })
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
-    setValues({
-      ...values,
-      checkBoxList: new Array(values.volAmount).fill(false),
-    });
+    if (values.list === "") {
+      setCheckBoxList(new Array(values.volAmount).fill(false));
+    } else {
+      setCheckBoxList(JSON.parse(values.list));
+    }
   }, [values.volAmount]);
 
   const handleCheckboxChange = (index) => {
-    const updatedCheckBoxList = values.checkBoxList.map((item, idx) =>
+    const updatedCheckBoxList = CheckBoxList.map((item, idx) =>
       idx === index ? !item : item
     );
 
-    setValues({ ...values, checkBoxList: updatedCheckBoxList });
+    setCheckBoxList(updatedCheckBoxList);
+    setValues({
+      ...values,
+      list: JSON.stringify(CheckBoxList),
+    });
   };
   return (
     <Grid container justify="center">
@@ -229,7 +241,7 @@ function Edit() {
                   ></TextField>
                   <h2>Individual Volumes Collected</h2>
                   <div>
-                    {values.checkBoxList.map((isChecked, index) => (
+                    {CheckBoxList.map((isChecked, index) => (
                       <div key={index}>
                         <input
                           type="checkbox"
