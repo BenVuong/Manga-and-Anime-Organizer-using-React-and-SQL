@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { Grid, Card, TextField, CardContent, InputLabel } from "@mui/material";
+
 function Edit() {
   const { id } = useParams();
 
@@ -22,13 +23,18 @@ function Edit() {
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    setValues({
-      ...values,
-
+    // Update the values.list before making the API call
+    setValues((prevValues) => ({
+      ...prevValues,
       list: JSON.stringify(CheckBoxList),
-    });
+    }));
+
+    // Make the API call after updating the values.list
     axios
-      .put("http://localhost:8081/edit/" + id, values)
+      .put("http://localhost:8081/edit/" + id, {
+        ...values,
+        list: JSON.stringify(CheckBoxList), // Use the latest CheckBoxList state
+      })
       .then((res) => {
         console.log(res);
         navigate("/read/" + id);
@@ -59,7 +65,7 @@ function Edit() {
         });
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (values.list === "") {
@@ -67,7 +73,7 @@ function Edit() {
     } else {
       setCheckBoxList(JSON.parse(values.list));
     }
-  }, [values.volAmount]);
+  }, [values.volAmount, values.list]);
 
   const handleCheckboxChange = (index) => {
     const updatedCheckBoxList = CheckBoxList.map((item, idx) =>
@@ -75,11 +81,13 @@ function Edit() {
     );
 
     setCheckBoxList(updatedCheckBoxList);
-    setValues({
-      ...values,
-      list: JSON.stringify(CheckBoxList),
-    });
+    // Use the functional form to ensure the latest CheckBoxList is used
+    setValues((prevValues) => ({
+      ...prevValues,
+      list: JSON.stringify(updatedCheckBoxList),
+    }));
   };
+
   return (
     <Grid container justify="center">
       <Grid item md={3}>
@@ -89,7 +97,11 @@ function Edit() {
               <Grid item>
                 <h2>Edit Manga</h2>
                 <h3>Cover Art Preview:</h3>
-                <img src={values.image} style={{ maxWidth: "100%" }}></img>
+                <img
+                  src={values.image}
+                  style={{ maxWidth: "100%" }}
+                  alt="Cover Art"
+                ></img>
               </Grid>
             </Grid>
           </CardContent>
@@ -103,9 +115,8 @@ function Edit() {
               <form onSubmit={handleUpdate}>
                 <h2>Manga Info</h2>
                 <h5>You can manually edit these entries if needed</h5>
-                <button className="btn btn-success"> Submit</button>
+                <button className="btn btn-success">Submit</button>
                 <Link to="/" className="btn btn-success">
-                  {" "}
                   Back
                 </Link>
                 <h2></h2>
@@ -210,7 +221,7 @@ function Edit() {
                     <option value="4">4 Bad</option>
                     <option value="3">3 Very Bad</option>
                     <option value="2">2 Horrible</option>
-                    <option value="1">1 Appalling </option>
+                    <option value="1">1 Appalling</option>
                   </select>
                   <InputLabel>Status</InputLabel>
                   <select
