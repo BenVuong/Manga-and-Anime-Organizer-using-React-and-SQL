@@ -6,6 +6,7 @@ import { Grid, Card, TextField, CardContent, InputLabel } from "@mui/material";
 function Edit() {
   const { id } = useParams();
 
+  const [CheckBoxList, setCheckBoxList] = useState([]);
   const [values, setValues] = useState({
     name: "",
     amountCollected: "",
@@ -34,6 +35,7 @@ function Edit() {
       .get("http://localhost:8081/read/" + id)
       .then((res) => {
         console.log(res);
+
         setValues({
           ...values,
           name: res.data[0].name,
@@ -51,6 +53,18 @@ function Edit() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    setCheckBoxList(new Array(values.volAmount).fill(false));
+  }, [values.volAmount]);
+
+  const handleCheckboxChange = (index) => {
+    const updatedCheckBoxList = CheckBoxList.map((item, idx) =>
+      idx === index ? !item : item
+    );
+
+    setCheckBoxList(updatedCheckBoxList);
+  };
   return (
     <Grid container justify="center">
       <Grid item md={3}>
@@ -210,6 +224,19 @@ function Edit() {
                       setValues({ ...values, notes: e.target.value })
                     }
                   ></TextField>
+                  <h2>Individual Volumes Collected</h2>
+                  <div>
+                    {CheckBoxList.map((isChecked, index) => (
+                      <div key={index}>
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => handleCheckboxChange(index)}
+                        ></input>
+                        <label>Volume {index + 1}</label>
+                      </div>
+                    ))}
+                  </div>
                 </Grid>
               </form>
             </Grid>
