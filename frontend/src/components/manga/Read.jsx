@@ -39,13 +39,14 @@ const Pillar = styled("div")(({ theme }) => ({
 function Read() {
   const { id } = useParams();
   const [book, setBook] = useState([]);
-
+  const [checkList, setCheckBoxList] = useState([]);
   useEffect(() => {
     axios
       .get("http://localhost:8081/read/" + id)
       .then((res) => {
         console.log(res);
         setBook(res.data[0]);
+        setCheckBoxList(JSON.parse(res.data[0].list));
       })
       .catch((err) => console.log(err));
   }, []);
@@ -96,6 +97,15 @@ function Read() {
             <Divider />
             {book.notes}
           </Item>
+          <h2>Individual Volumes Collected</h2>
+          <div>
+            {checkList?.map((isChecked, index) => (
+              <div key={index}>
+                <input type="checkbox" checked={isChecked}></input>
+                <label>Volume {index + 1}</label>
+              </div>
+            ))}
+          </div>
         </Grid>
       </Grid>
     </Box>
