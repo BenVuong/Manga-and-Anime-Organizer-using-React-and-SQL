@@ -68,6 +68,9 @@ function Edit() {
   }, [id]);
 
   useEffect(() => {
+    //add in a part of the if conidition
+    //if volAmount has increased as is more than the length of the current checkboxlist
+    //then extend the list
     if (values.list === "") {
       setCheckBoxList(new Array(values.volAmount).fill(false));
     } else {

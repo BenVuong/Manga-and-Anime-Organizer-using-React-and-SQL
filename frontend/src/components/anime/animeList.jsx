@@ -19,11 +19,14 @@ function AnimeList() {
   useEffect(() => {
     axios
       .get("http://localhost:8081/animelist")
-      .then((res) => setData(res.data))
-      .then(console.log(data))
+      .then((res) => {
+        const sortedData = res.data.sort((a, b) =>
+          a.title > b.title ? 1 : -1
+        );
+        setData(sortedData);
+        setArrayOfAnime(sortedData);
+      })
       .catch((err) => console.log(err));
-    setArrayOfAnime(data);
-    console.log(arrayOfAnime);
   }, []);
 
   const filterStatus = (data, value) => {
@@ -84,7 +87,6 @@ function AnimeList() {
         handleDelete={handleDelete}
         animeID={animeID}
       />
-      <div></div>
     </div>
   );
 }

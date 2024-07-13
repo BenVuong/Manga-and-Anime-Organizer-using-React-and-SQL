@@ -97,15 +97,18 @@ function Read() {
             <Divider />
             {book.notes}
           </Item>
-          <h2>Individual Volumes Collected</h2>
-          <div>
-            {checkList?.map((isChecked, index) => (
-              <div key={index}>
-                <input type="checkbox" checked={isChecked}></input>
-                <label>Volume {index + 1}</label>
-              </div>
-            ))}
-          </div>
+
+          <Item>
+            <h2>Individual Volumes Collected</h2>
+            <div>
+              {checkList?.map((isChecked, index) => (
+                <div key={index}>
+                  <input type="checkbox" checked={isChecked}></input>
+                  <label>Volume {index + 1}</label>
+                </div>
+              ))}
+            </div>
+          </Item>
         </Grid>
       </Grid>
     </Box>
