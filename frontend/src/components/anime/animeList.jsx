@@ -7,7 +7,6 @@ function AnimeList() {
   const [data, setData] = useState([]);
   const [animeName, setAnimeName] = useState("");
   const [arrayOfAnime, setArrayOfAnime] = useState([]);
-  const [animeFilterStatus, setAnimeFilterStatus] = useState("");
   const [animeID, setAnimeID] = useState();
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -29,8 +28,25 @@ function AnimeList() {
       .catch((err) => console.log(err));
   }, []);
 
-  const filterStatus = (data, value) => {
-    if (value === "clear") {
+  const filterStatus = (value) => {
+    switch (value) {
+      case "Complete":
+        setArrayOfAnime(data.filter((data) => data.status === "Completed"));
+        break;
+      case "Watching":
+        setArrayOfAnime(data.filter((data) => data.status === "Watching"));
+        break;
+      case "Plan to Watch":
+        setArrayOfAnime(data.filter((data) => data.status === "Plan to Watch"));
+        break;
+      case "On-Hold":
+        setArrayOfAnime(data.filter((data) => data.status === "On-Hold"));
+        break;
+      case "Dropped":
+        setArrayOfAnime(data.filter((data) => data.status === "Dropped"));
+        break;
+      default:
+        setArrayOfAnime(data);
     }
   };
 
@@ -74,11 +90,18 @@ function AnimeList() {
       <Accordion>
         <AccordionSummary>Filter by status</AccordionSummary>
         <AccordionDetails>
-          <button>Completed</button>
+          <button onClick={() => filterStatus("clear")}>Reset</button>
+          <button onClick={() => filterStatus("Complete")}>Completed</button>
+          <button onClick={() => filterStatus("Watching")}>Watching</button>
+          <button onClick={() => filterStatus("Plan to Watch")}>
+            Plan to Watch
+          </button>
+          <button onClick={() => filterStatus("On-Hold")}>On-Hold</button>
+          <button onClick={() => filterStatus("Dropped")}>Dropped</button>
         </AccordionDetails>
       </Accordion>
       <AnimeListDisplay
-        data={data}
+        data={arrayOfAnime}
         handleOpen={handleOpen}
         open={open}
         handleClose={handleClose}
