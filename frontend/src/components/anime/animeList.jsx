@@ -1,8 +1,10 @@
 import { AnimeListDisplay } from "./animeListDisplay";
+import { AnimeListCards } from "./animeListCards";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+
 function AnimeList() {
   const [data, setData] = useState([]);
   const [animeName, setAnimeName] = useState("");
@@ -100,7 +102,7 @@ function AnimeList() {
           <button onClick={() => filterStatus("Dropped")}>Dropped</button>
         </AccordionDetails>
       </Accordion>
-      <AnimeListDisplay
+      <AnimeListCards
         data={arrayOfAnime}
         handleOpen={handleOpen}
         open={open}
