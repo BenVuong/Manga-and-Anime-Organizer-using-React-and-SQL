@@ -11,6 +11,7 @@ function AnimeList() {
   const [arrayOfAnime, setArrayOfAnime] = useState([]);
   const [animeID, setAnimeID] = useState();
   const [open, setOpen] = useState(false);
+  const [layout, setLayout] = useState("Cards");
   const handleClose = () => setOpen(false);
   const handleOpen = (showName, showID) => {
     setAnimeID(showID);
@@ -74,6 +75,36 @@ function AnimeList() {
     p: 4,
   };
 
+  function DisplayLayout() {
+    if (layout === "Cards") {
+      return (
+        <AnimeListCards
+          data={arrayOfAnime}
+          handleOpen={handleOpen}
+          open={open}
+          handleClose={handleClose}
+          style={style}
+          animeName={animeName}
+          handleDelete={handleDelete}
+          animeID={animeID}
+        />
+      );
+    } else {
+      return (
+        <AnimeListDisplay
+          data={arrayOfAnime}
+          handleOpen={handleOpen}
+          open={open}
+          handleClose={handleClose}
+          style={style}
+          animeName={animeName}
+          handleDelete={handleDelete}
+          animeID={animeID}
+        />
+      );
+    }
+  }
+
   return (
     <div>
       <h1>Anime Collection and Tracker</h1>
@@ -102,16 +133,14 @@ function AnimeList() {
           <button onClick={() => filterStatus("Dropped")}>Dropped</button>
         </AccordionDetails>
       </Accordion>
-      <AnimeListCards
-        data={arrayOfAnime}
-        handleOpen={handleOpen}
-        open={open}
-        handleClose={handleClose}
-        style={style}
-        animeName={animeName}
-        handleDelete={handleDelete}
-        animeID={animeID}
-      />
+      <Accordion>
+        <AccordionSummary>Display Layout</AccordionSummary>
+        <AccordionDetails>
+          <button onClick={() => setLayout("Cards")}>Cards Layout</button>
+          <button onClick={() => setLayout("List")}>List Layout</button>
+        </AccordionDetails>
+      </Accordion>
+      <DisplayLayout />
     </div>
   );
 }
