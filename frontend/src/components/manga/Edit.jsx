@@ -75,6 +75,12 @@ function Edit() {
       setCheckBoxList(new Array(values.volAmount).fill(false));
     } else {
       setCheckBoxList(JSON.parse(values.list));
+      if (values.volAmount > CheckBoxList.length) {
+        setCheckBoxList((prevCheckBoxList) => [
+          ...prevCheckBoxList,
+          ...new Array(values.volAmount - prevCheckBoxList.length).fill(false),
+        ]);
+      }
     }
   }, [values.volAmount, values.list]);
 
