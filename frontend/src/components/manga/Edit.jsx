@@ -80,6 +80,12 @@ function Edit() {
           ...prevCheckBoxList,
           ...new Array(values.volAmount - prevCheckBoxList.length).fill(false),
         ]);
+      } else if (values.volAmount < CheckBoxList.length) {
+        let temp = CheckBoxList;
+        for (let x = 0; x < CheckBoxList.length - values.volAmount; x++) {
+          temp.pop();
+        }
+        setCheckBoxList(temp);
       }
     }
   }, [values.volAmount, values.list]);
