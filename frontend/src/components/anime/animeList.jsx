@@ -3,7 +3,14 @@ import { AnimeListCards } from "./animeListCards";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  MenuItem,
+  Select,
+  InputLabel,
+} from "@mui/material";
 
 function AnimeList() {
   const [data, setData] = useState([]);
@@ -31,22 +38,51 @@ function AnimeList() {
       .catch((err) => console.log(err));
   }, []);
 
-  const filterStatus = (value) => {
-    switch (value) {
-      case "Complete":
-        setArrayOfAnime(data.filter((data) => data.status === "Completed"));
+  const filterStatus = (event) => {
+    switch (event.target.value) {
+      case "Completed":
+        setArrayOfAnime(
+          arrayOfAnime.filter((data) => data.status === "Completed")
+        );
         break;
       case "Watching":
-        setArrayOfAnime(data.filter((data) => data.status === "Watching"));
+        setArrayOfAnime(
+          arrayOfAnime.filter((data) => data.status === "Watching")
+        );
         break;
       case "Plan to Watch":
-        setArrayOfAnime(data.filter((data) => data.status === "Plan to Watch"));
+        setArrayOfAnime(
+          arrayOfAnime.filter((data) => data.status === "Plan to Watch")
+        );
         break;
       case "On-Hold":
-        setArrayOfAnime(data.filter((data) => data.status === "On-Hold"));
+        setArrayOfAnime(
+          arrayOfAnime.filter((data) => data.status === "On-Hold")
+        );
         break;
       case "Dropped":
-        setArrayOfAnime(data.filter((data) => data.status === "Dropped"));
+        setArrayOfAnime(
+          arrayOfAnime.filter((data) => data.status === "Dropped")
+        );
+        break;
+      default:
+        setArrayOfAnime(data);
+    }
+  };
+
+  const filterType = (event) => {
+    switch (event.target.value) {
+      case "TV":
+        setArrayOfAnime(arrayOfAnime.filter((data) => data.type === "TV"));
+        break;
+      case "Movie":
+        setArrayOfAnime(arrayOfAnime.filter((data) => data.type === "Movie"));
+        break;
+      case "OVA":
+        setArrayOfAnime(arrayOfAnime.filter((data) => data.type === "OVA"));
+        break;
+      case "ONA":
+        setArrayOfAnime(arrayOfAnime.filter((data) => data.type === "ONA"));
         break;
       default:
         setArrayOfAnime(data);
@@ -121,16 +157,28 @@ function AnimeList() {
         </Link>
       </div>
       <Accordion>
-        <AccordionSummary>Filter by status</AccordionSummary>
+        <AccordionSummary>Filter</AccordionSummary>
         <AccordionDetails>
-          <button onClick={() => filterStatus("clear")}>Reset</button>
-          <button onClick={() => filterStatus("Complete")}>Completed</button>
-          <button onClick={() => filterStatus("Watching")}>Watching</button>
-          <button onClick={() => filterStatus("Plan to Watch")}>
-            Plan to Watch
-          </button>
-          <button onClick={() => filterStatus("On-Hold")}>On-Hold</button>
-          <button onClick={() => filterStatus("Dropped")}>Dropped</button>
+          <div>
+            <div>
+              <InputLabel>Status</InputLabel>
+              <Select onChange={filterStatus} label="Status">
+                <MenuItem value={"all"}>ALL</MenuItem>
+                <MenuItem value={"Completed"}>Completed</MenuItem>
+                <MenuItem value={"Watching"}>Watching</MenuItem>
+                <MenuItem value={"Plan to Watch"}>Plan to Watch</MenuItem>
+                <MenuItem value={"On-Hold"}>On-Hold</MenuItem>
+              </Select>
+              <InputLabel>Type</InputLabel>
+              <Select onChange={filterType} label="Type">
+                <MenuItem value={"all"}>ALL</MenuItem>
+                <MenuItem value={"TV"}>TV</MenuItem>
+                <MenuItem value={"Movie"}>Movie</MenuItem>
+                <MenuItem value={"OVA"}>OVA</MenuItem>
+                <MenuItem value={"ONA"}>ONA</MenuItem>
+              </Select>
+            </div>
+          </div>
         </AccordionDetails>
       </Accordion>
       <Accordion>
