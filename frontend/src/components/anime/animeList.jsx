@@ -41,29 +41,19 @@ function AnimeList() {
   const filterStatus = (event) => {
     switch (event.target.value) {
       case "Completed":
-        setArrayOfAnime(
-          arrayOfAnime.filter((data) => data.status === "Completed")
-        );
+        setArrayOfAnime(data.filter((data) => data.status === "Completed"));
         break;
       case "Watching":
-        setArrayOfAnime(
-          arrayOfAnime.filter((data) => data.status === "Watching")
-        );
+        setArrayOfAnime(data.filter((data) => data.status === "Watching"));
         break;
       case "Plan to Watch":
-        setArrayOfAnime(
-          arrayOfAnime.filter((data) => data.status === "Plan to Watch")
-        );
+        setArrayOfAnime(data.filter((data) => data.status === "Plan to Watch"));
         break;
       case "On-Hold":
-        setArrayOfAnime(
-          arrayOfAnime.filter((data) => data.status === "On-Hold")
-        );
+        setArrayOfAnime(data.filter((data) => data.status === "On-Hold"));
         break;
       case "Dropped":
-        setArrayOfAnime(
-          arrayOfAnime.filter((data) => data.status === "Dropped")
-        );
+        setArrayOfAnime(data.filter((data) => data.status === "Dropped"));
         break;
       default:
         setArrayOfAnime(data);
@@ -73,16 +63,16 @@ function AnimeList() {
   const filterType = (event) => {
     switch (event.target.value) {
       case "TV":
-        setArrayOfAnime(arrayOfAnime.filter((data) => data.type === "TV"));
+        setArrayOfAnime(data.filter((data) => data.type === "TV"));
         break;
       case "Movie":
-        setArrayOfAnime(arrayOfAnime.filter((data) => data.type === "Movie"));
+        setArrayOfAnime(data.filter((data) => data.type === "Movie"));
         break;
       case "OVA":
-        setArrayOfAnime(arrayOfAnime.filter((data) => data.type === "OVA"));
+        setArrayOfAnime(data.filter((data) => data.type === "OVA"));
         break;
       case "ONA":
-        setArrayOfAnime(arrayOfAnime.filter((data) => data.type === "ONA"));
+        setArrayOfAnime(data.filter((data) => data.type === "ONA"));
         break;
       default:
         setArrayOfAnime(data);
@@ -168,6 +158,7 @@ function AnimeList() {
                 <MenuItem value={"Watching"}>Watching</MenuItem>
                 <MenuItem value={"Plan to Watch"}>Plan to Watch</MenuItem>
                 <MenuItem value={"On-Hold"}>On-Hold</MenuItem>
+                <MenuItem value={"Dropped"}>Dropped</MenuItem>
               </Select>
               <InputLabel>Type</InputLabel>
               <Select onChange={filterType} label="Type">

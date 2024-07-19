@@ -96,13 +96,23 @@ function CreateAnime() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8081/anime", values)
-      .then((res) => {
-        console.log(res);
-        navigate("/animeList");
-      })
-      .catch((err) => console.log(err));
+    if (
+      values.episodesWatched <= values.episodeCount &&
+      values.episodesWatched > -1
+    ) {
+      axios
+        .post("http://localhost:8081/anime", values)
+        .then((res) => {
+          console.log(res);
+          navigate("/animeList");
+        })
+        .catch((err) => console.log(err));
+    } else {
+      alert(
+        "Number of episodes watched can't be more than total episode count or negative"
+      );
+      return;
+    }
   };
   return (
     <Grid container justify="center">
@@ -185,6 +195,8 @@ function CreateAnime() {
                       setValues({ ...values, studio: e.target.value })
                     }
                   ></TextField>
+                  {/* add in logic to prevent logging more episodes watched
+                  than total number of anime */}
                   <TextField
                     id="outlined-basic"
                     type="number"

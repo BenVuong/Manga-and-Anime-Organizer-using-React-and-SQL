@@ -21,13 +21,23 @@ function EditAnime() {
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    axios
-      .put("http://localhost:8081/editanime/" + id, values)
-      .then((res) => {
-        console.log(res);
-        navigate("/readanime/" + id);
-      })
-      .catch((err) => console.log(err));
+    if (
+      values.episodesWatched <= values.episodeCount &&
+      values.episodeCount > -1
+    ) {
+      axios
+        .put("http://localhost:8081/editanime/" + id, values)
+        .then((res) => {
+          console.log(res);
+          navigate("/readanime/" + id);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      alert(
+        "Number of episodes watched can't be more than total episode count or negative"
+      );
+      return;
+    }
   };
 
   useEffect(() => {
@@ -98,6 +108,8 @@ function EditAnime() {
                       setValues({ ...values, studio: e.target.value })
                     }
                   ></TextField>
+                  {/* add in logic to prevent logging more episodes watched
+                  than total number of anime */}
                   <TextField
                     id="outlined-basic"
                     type="number"
