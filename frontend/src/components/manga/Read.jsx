@@ -53,10 +53,10 @@ function Read() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1}>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <Title>{book.name}</Title>
         </Grid>
-        <Grid xs={12} sm={2}>
+        <Grid item xs={12} sm={2}>
           <Pillar>
             <Item>
               <img src={book.image} style={{ maxWidth: "100%" }} />
@@ -83,7 +83,7 @@ function Read() {
             </Item>
           </Pillar>
         </Grid>
-        <Grid xs={12} sm={10}>
+        <Grid item xs={12} sm={10}>
           <Item>Score: {book.score}</Item>
           <Item>Volumes Collected: {book.amountCollected}</Item>
           <Item>Status: {book.status}</Item>
@@ -103,7 +103,7 @@ function Read() {
             <div>
               {checkList?.map((isChecked, index) => (
                 <div key={index}>
-                  <input type="checkbox" checked={isChecked}></input>
+                  <input type="checkbox" checked={isChecked} readOnly></input>
                   <label>Volume {index + 1}</label>
                 </div>
               ))}

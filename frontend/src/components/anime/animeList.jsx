@@ -32,8 +32,10 @@ function AnimeList() {
         const sortedData = res.data.sort((a, b) =>
           a.title > b.title ? 1 : -1
         );
+
         setData(sortedData);
         setArrayOfAnime(sortedData);
+        console.log(sortedData);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -152,7 +154,7 @@ function AnimeList() {
           <div>
             <div>
               <InputLabel>Status</InputLabel>
-              <Select onChange={filterStatus} label="Status">
+              <Select label="Status" onChange={filterStatus}>
                 <MenuItem value={"all"}>ALL</MenuItem>
                 <MenuItem value={"Completed"}>Completed</MenuItem>
                 <MenuItem value={"Watching"}>Watching</MenuItem>
