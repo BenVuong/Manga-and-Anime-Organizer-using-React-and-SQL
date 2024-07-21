@@ -10,14 +10,17 @@ import {
   MenuItem,
   Select,
   InputLabel,
+  Button,
 } from "@mui/material";
 
 function AnimeList() {
   const [data, setData] = useState([]);
+  const [pageInfo, setPageInfo] = useState([]);
   const [animeName, setAnimeName] = useState("");
   const [arrayOfAnime, setArrayOfAnime] = useState([]);
   const [animeID, setAnimeID] = useState();
   const [open, setOpen] = useState(false);
+  const [pageNum, setPageNum] = useState(1);
   const [layout, setLayout] = useState("Cards");
   const handleClose = () => setOpen(false);
   const handleOpen = (showName, showID) => {
@@ -26,10 +29,32 @@ function AnimeList() {
     setOpen(true);
   };
   useEffect(() => {
+    getAnimeEntriesPages(pageNum);
+  }, [pageNum]);
+
+  const handleNextPage = () => {
+    if (pageNum < pageInfo.totalPages) {
+      setPageNum((prevPageNum) => prevPageNum + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pageNum > 1) {
+      setPageNum((prevPageNum) => prevPageNum - 1);
+    }
+  };
+
+  const getAnimeEntriesPages = (num) => {
     axios
-      .get("http://localhost:8081/animelist")
+      .get("http://localhost:8081/paginatedanimelist", {
+        params: {
+          page: num,
+        },
+      })
       .then((res) => {
-        const sortedData = res.data.sort((a, b) =>
+        setPageInfo(res.data.paginationInfo);
+        console.log(pageInfo);
+        const sortedData = res.data.data.sort((a, b) =>
           a.title > b.title ? 1 : -1
         );
 
@@ -38,7 +63,7 @@ function AnimeList() {
         console.log(sortedData);
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   const filterStatus = (event) => {
     switch (event.target.value) {
@@ -147,6 +172,12 @@ function AnimeList() {
           {" "}
           Add Anime +
         </Link>
+        <Button variant="contained" onClick={handlePrevPage}>
+          Prev Page
+        </Button>
+        <Button variant="contained" onClick={handleNextPage}>
+          Next Page
+        </Button>
       </div>
       <Accordion>
         <AccordionSummary>Filter</AccordionSummary>
