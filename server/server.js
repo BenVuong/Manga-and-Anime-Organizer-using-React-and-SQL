@@ -21,11 +21,42 @@ app.get("/", (req, res) => {
   });
 });
 
+
 app.get("/animelist", (req, res) => {
   const sql = "SELECT * FROM anime";
   db.query(sql, (err, result) => {
     if (err) return res.json({ Message: "error inside server" });
     return res.json(result);
+  });
+});
+
+app.get("/paginatedanimelist", (req, res) => {
+  const limit = 10; // default limit is 10 items per page
+  const page = parseInt(req.query.page) ||1; // default page is 1
+  const offset = (page - 1) * limit;
+
+  // First query to get total count of entries
+  const countSql = "SELECT COUNT(*) AS total FROM anime";
+  db.query(countSql, (err, countResult) => {
+    if (err) return res.json({ Message: "error inside server" });
+
+    const totalEntries = countResult[0].total;
+    const totalPages = Math.ceil(totalEntries / limit);
+
+    // Second query to get paginated entries
+    const sql = "SELECT * FROM anime ORDER by title LIMIT ? OFFSET ?";
+    db.query(sql, [limit, offset], (err, result) => {
+      if (err) return res.json({ Message: "error inside server" });
+
+      return res.json({
+        data: result,
+        paginationInfo: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalEntries: totalEntries,
+        },
+      });
+    });
   });
 });
 

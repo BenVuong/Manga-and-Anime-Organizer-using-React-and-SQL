@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-
+import Checkbox from "@mui/material/Checkbox";
 const Title = styled("div")(({ theme }) => ({
   backgroundColor: "#616161",
   border: "1px solid",
@@ -103,7 +103,7 @@ function Read() {
             <div>
               {checkList?.map((isChecked, index) => (
                 <div key={index}>
-                  <input type="checkbox" checked={isChecked} readOnly></input>
+                  <Checkbox checked={isChecked} readOnly></Checkbox>
                   <label>Volume {index + 1}</label>
                 </div>
               ))}

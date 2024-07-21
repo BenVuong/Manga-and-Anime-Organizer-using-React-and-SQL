@@ -2,7 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import { Grid, Card, TextField, CardContent, InputLabel } from "@mui/material";
+import {
+  Grid,
+  Card,
+  TextField,
+  CardContent,
+  InputLabel,
+  Checkbox,
+} from "@mui/material";
 
 function Edit() {
   const { id } = useParams();
@@ -269,11 +276,10 @@ function Edit() {
                   <div>
                     {CheckBoxList.map((isChecked, index) => (
                       <div key={index}>
-                        <input
-                          type="checkbox"
+                        <Checkbox
                           checked={isChecked}
                           onChange={() => handleCheckboxChange(index)}
-                        ></input>
+                        ></Checkbox>
                         <label>Volume {index + 1}</label>
                       </div>
                     ))}
