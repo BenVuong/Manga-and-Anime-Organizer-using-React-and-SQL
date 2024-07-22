@@ -49,6 +49,8 @@ function AnimeList() {
       .get("http://localhost:8081/paginatedanimelist", {
         params: {
           page: num,
+          status: "",
+          type: "TV",
         },
       })
       .then((res) => {
@@ -160,25 +162,20 @@ function AnimeList() {
 
   return (
     <div>
-      <h1>Anime Collection and Tracker</h1>
-      <div className="d-flex justify-content  ">
+      <h1 className="d-flex justify-content-center">
+        Anime Collection and Tracker
+      </h1>
+      <div className="d-flex justify-content-center ">
         <Link to="/" className="btn btn-success">
           {" "}
           Manga List{" "}
         </Link>
-      </div>
-      <div className="d-flex justify-content  ">
         <Link to="/createanime" className="btn btn-success">
           {" "}
           Add Anime +
         </Link>
-        <Button variant="contained" onClick={handlePrevPage}>
-          Prev Page
-        </Button>
-        <Button variant="contained" onClick={handleNextPage}>
-          Next Page
-        </Button>
       </div>
+      total entires: {pageInfo.totalEntries}
       <Accordion>
         <AccordionSummary>Filter</AccordionSummary>
         <AccordionDetails>
@@ -213,6 +210,16 @@ function AnimeList() {
         </AccordionDetails>
       </Accordion>
       <DisplayLayout />
+      <div className="d-flex justify-content-center  ">
+        {" "}
+        <Button variant="contained" onClick={handlePrevPage}>
+          Prev Page
+        </Button>
+        Page: {pageNum} / {pageInfo.totalPages}
+        <Button variant="contained" onClick={handleNextPage}>
+          Next Page
+        </Button>
+      </div>
     </div>
   );
 }

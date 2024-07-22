@@ -25,7 +25,7 @@ export function AnimeListCards({
         <Grid container spacing={4}>
           {data?.map((anime, index) => {
             return (
-              <Grid item xs={5} sm={3}>
+              <Grid item xs={6} sm={3} lg={12 / 5}>
                 <Card>
                   <Grid container alignContent="center" justifyContent="center">
                     <CardContent>

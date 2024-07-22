@@ -32,20 +32,45 @@ app.get("/animelist", (req, res) => {
 
 app.get("/paginatedanimelist", (req, res) => {
   const limit = 10; // default limit is 10 items per page
-  const page = parseInt(req.query.page) ||1; // default page is 1
+  const page = parseInt(req.query.page) || 1; // default page is 1
   const offset = (page - 1) * limit;
+  const status = req.query.status;
+  const type = req.query.type;
+
+  let countSql = "SELECT COUNT(*) AS total FROM anime";
+  let dataSql = "SELECT * FROM anime";
+  let sqlParams = [];
+
+  let conditions = [];
+
+  if (status) { // optional query parameter to filter status 
+    conditions.push(`status = ?`);
+    sqlParams.push(status);
+  }
+
+  if (type) { // optional query parameter to filter type
+    conditions.push(`type = ?`);
+    sqlParams.push(type);
+  }
+
+  if (conditions.length > 0) {
+    const whereClause = " WHERE " + conditions.join(" AND ");
+    countSql += whereClause;
+    dataSql += whereClause;
+  }
+
+  dataSql += " ORDER BY title LIMIT ? OFFSET ?";
+  sqlParams.push(limit, offset);
 
   // First query to get total count of entries
-  const countSql = "SELECT COUNT(*) AS total FROM anime";
-  db.query(countSql, (err, countResult) => {
+  db.query(countSql, sqlParams.slice(0, -2), (err, countResult) => {
     if (err) return res.json({ Message: "error inside server" });
 
     const totalEntries = countResult[0].total;
     const totalPages = Math.ceil(totalEntries / limit);
 
     // Second query to get paginated entries
-    const sql = "SELECT * FROM anime ORDER by title LIMIT ? OFFSET ?";
-    db.query(sql, [limit, offset], (err, result) => {
+    db.query(dataSql, sqlParams, (err, result) => {
       if (err) return res.json({ Message: "error inside server" });
 
       return res.json({
@@ -59,6 +84,7 @@ app.get("/paginatedanimelist", (req, res) => {
     });
   });
 });
+
 
 app.get("/read/:id", (req, res) => {
   const sql = "SELECT * FROM book WHERE id = ?";
