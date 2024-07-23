@@ -22,6 +22,8 @@ function AnimeList() {
   const [open, setOpen] = useState(false);
   const [pageNum, setPageNum] = useState(1);
   const [layout, setLayout] = useState("Cards");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedtype, setSelectedType] = useState("");
   const handleClose = () => setOpen(false);
   const handleOpen = (showName, showID) => {
     setAnimeID(showID);
@@ -44,13 +46,17 @@ function AnimeList() {
     }
   };
 
+  const applyFilter = (event) => {
+    event.preventDefault();
+    getAnimeEntriesPages(1);
+  };
   const getAnimeEntriesPages = (num) => {
     axios
       .get("http://localhost:8081/paginatedanimelist", {
         params: {
           page: num,
-          status: "",
-          type: "TV",
+          status: selectedStatus,
+          type: selectedtype,
         },
       })
       .then((res) => {
@@ -68,44 +74,11 @@ function AnimeList() {
   };
 
   const filterStatus = (event) => {
-    switch (event.target.value) {
-      case "Completed":
-        setArrayOfAnime(data.filter((data) => data.status === "Completed"));
-        break;
-      case "Watching":
-        setArrayOfAnime(data.filter((data) => data.status === "Watching"));
-        break;
-      case "Plan to Watch":
-        setArrayOfAnime(data.filter((data) => data.status === "Plan to Watch"));
-        break;
-      case "On-Hold":
-        setArrayOfAnime(data.filter((data) => data.status === "On-Hold"));
-        break;
-      case "Dropped":
-        setArrayOfAnime(data.filter((data) => data.status === "Dropped"));
-        break;
-      default:
-        setArrayOfAnime(data);
-    }
+    setSelectedStatus(event.target.value);
   };
 
   const filterType = (event) => {
-    switch (event.target.value) {
-      case "TV":
-        setArrayOfAnime(data.filter((data) => data.type === "TV"));
-        break;
-      case "Movie":
-        setArrayOfAnime(data.filter((data) => data.type === "Movie"));
-        break;
-      case "OVA":
-        setArrayOfAnime(data.filter((data) => data.type === "OVA"));
-        break;
-      case "ONA":
-        setArrayOfAnime(data.filter((data) => data.type === "ONA"));
-        break;
-      default:
-        setArrayOfAnime(data);
-    }
+    setSelectedType(event.target.value);
   };
 
   const handleDelete = (id) => {
@@ -179,27 +152,26 @@ function AnimeList() {
       <Accordion>
         <AccordionSummary>Filter</AccordionSummary>
         <AccordionDetails>
-          <div>
-            <div>
-              <InputLabel>Status</InputLabel>
-              <Select label="Status" onChange={filterStatus}>
-                <MenuItem value={"all"}>ALL</MenuItem>
-                <MenuItem value={"Completed"}>Completed</MenuItem>
-                <MenuItem value={"Watching"}>Watching</MenuItem>
-                <MenuItem value={"Plan to Watch"}>Plan to Watch</MenuItem>
-                <MenuItem value={"On-Hold"}>On-Hold</MenuItem>
-                <MenuItem value={"Dropped"}>Dropped</MenuItem>
-              </Select>
-              <InputLabel>Type</InputLabel>
-              <Select onChange={filterType} label="Type">
-                <MenuItem value={"all"}>ALL</MenuItem>
-                <MenuItem value={"TV"}>TV</MenuItem>
-                <MenuItem value={"Movie"}>Movie</MenuItem>
-                <MenuItem value={"OVA"}>OVA</MenuItem>
-                <MenuItem value={"ONA"}>ONA</MenuItem>
-              </Select>
-            </div>
-          </div>
+          <form onSubmit={applyFilter}>
+            <button className="btn btn-success"> Apply Filter</button>
+            <InputLabel>Status</InputLabel>
+            <Select label="Status" onChange={filterStatus}>
+              <MenuItem value={""}>ALL</MenuItem>
+              <MenuItem value={"Completed"}>Completed</MenuItem>
+              <MenuItem value={"Watching"}>Watching</MenuItem>
+              <MenuItem value={"Plan to Watch"}>Plan to Watch</MenuItem>
+              <MenuItem value={"On-Hold"}>On-Hold</MenuItem>
+              <MenuItem value={"Dropped"}>Dropped</MenuItem>
+            </Select>
+            <InputLabel>Type</InputLabel>
+            <Select onChange={filterType} label="Type">
+              <MenuItem value={""}>ALL</MenuItem>
+              <MenuItem value={"TV"}>TV</MenuItem>
+              <MenuItem value={"Movie"}>Movie</MenuItem>
+              <MenuItem value={"OVA"}>OVA</MenuItem>
+              <MenuItem value={"ONA"}>ONA</MenuItem>
+            </Select>
+          </form>
         </AccordionDetails>
       </Accordion>
       <Accordion>
