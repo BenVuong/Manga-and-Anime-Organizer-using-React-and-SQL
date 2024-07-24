@@ -1,4 +1,5 @@
 import { MangaListDisplay } from "./mangaListDisplay";
+import { MangaCards } from "./mangaCards";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -58,7 +59,7 @@ function Home() {
           Add Manga +
         </Link>
       </div>
-      <MangaListDisplay
+      <MangaCards
         data={data}
         handleOpen={handleOpen}
         open={open}

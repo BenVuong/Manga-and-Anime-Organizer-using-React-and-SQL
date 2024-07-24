@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 
 //sql query to get entries of from the book table
 app.get("/", (req, res) => {
-  const sql = "SELECT * FROM book";
+  const sql = "SELECT * FROM book ORDER by name";
   db.query(sql, (err, result) => {
     if (err) return res.json({ Message: "error inside server" });
     return res.json(result);
