@@ -3,12 +3,21 @@ import { MangaCards } from "./mangaCards";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  MenuItem,
+  Select,
+  InputLabel,
+  Button,
+} from "@mui/material";
 function Home() {
   const [data, setData] = useState([]);
   const [mangaName, setMangaName] = useState("");
   const [mangaID, setMangaID] = useState();
   const [open, setOpen] = useState(false);
+  const [layout, setLayout] = useState("Cards");
   const handleClose = () => setOpen(false);
   const handleOpen = (bookName, bookID) => {
     setMangaID(bookID);
@@ -31,6 +40,36 @@ function Home() {
       .catch((err) => console.log(err));
   };
 
+  function DisplayLayout() {
+    if (layout === "Cards") {
+      return (
+        <MangaCards
+          data={data}
+          handleOpen={handleOpen}
+          open={open}
+          handleClose={handleClose}
+          style={style}
+          mangaName={mangaName}
+          handleDelete={handleDelete}
+          mangaID={mangaID}
+        />
+      );
+    } else {
+      return (
+        <MangaListDisplay
+          data={data}
+          handleOpen={handleOpen}
+          open={open}
+          handleClose={handleClose}
+          style={style}
+          mangaName={mangaName}
+          handleDelete={handleDelete}
+          mangaID={mangaID}
+        />
+      );
+    }
+  }
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -45,30 +84,25 @@ function Home() {
 
   return (
     <div>
-      <h1>Manga Collection</h1>
-      <div className="d-flex justify-content  ">
+      <h1 className="d-flex justify-content-center">Manga Collection</h1>
+      <div className="d-flex justify-content-center  ">
         <Link to="/animeList" className="btn btn-success">
           {" "}
           Anime List{" "}
         </Link>
-      </div>
-      <div className="d-flex justify-content  ">
-        <undefined />
         <Link to="/create" className="btn btn-success">
           {" "}
           Add Manga +
         </Link>
       </div>
-      <MangaCards
-        data={data}
-        handleOpen={handleOpen}
-        open={open}
-        handleClose={handleClose}
-        style={style}
-        mangaName={mangaName}
-        handleDelete={handleDelete}
-        mangaID={mangaID}
-      />
+      <Accordion>
+        <AccordionSummary>Display Layout</AccordionSummary>
+        <AccordionDetails>
+          <button onClick={() => setLayout("Cards")}>Cards Layout</button>
+          <button onClick={() => setLayout("List")}>List Layout</button>
+        </AccordionDetails>
+      </Accordion>
+      <DisplayLayout />
     </div>
   );
 }
