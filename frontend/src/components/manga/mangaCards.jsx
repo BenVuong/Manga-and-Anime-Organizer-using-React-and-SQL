@@ -48,7 +48,8 @@ export function MangaCards({
                       ></img>
                     </Typography>
                     <Typography style={{ textAlign: "center" }}>
-                      Reading Progress {manga.amountCollected}/{manga.volAmount}
+                      Collection Progress: {manga.amountCollected}/
+                      {manga.volAmount}
                       <Grid item>
                         <Link
                           className="btn btn-info "

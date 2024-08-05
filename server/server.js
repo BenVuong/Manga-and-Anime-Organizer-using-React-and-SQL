@@ -1,7 +1,7 @@
 import express, { application } from "express";
 import mysql from "mysql";
 import cors from "cors";
-
+const port = 8081;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -20,6 +20,42 @@ app.get("/", (req, res) => {
     return res.json(result);
   });
 });
+
+app.get("/paginatedmangalist", (req,res) =>{
+  const limit = 10; // default limit is 10 items per page
+  const page = parseInt(req.query.page) || 1; // default page is 1
+  const offset = (page - 1) * limit;
+  const status = req.query.status;
+  const type = req.query.type;
+
+  let countSql = "SELECT COUNT(*) AS total FROM book";
+  let dataSql = "SELECT * FROM book";
+  let sqlParams = [];
+  dataSql += " ORDER BY name LIMIT ? OFFSET ?";
+  sqlParams.push(limit, offset);
+
+  // First query to get total count of entries
+  db.query(countSql, sqlParams.slice(0, -2), (err, countResult) => {
+    if (err) return res.json({ Message: "error inside server" });
+
+    const totalEntries = countResult[0].total;
+    const totalPages = Math.ceil(totalEntries / limit);
+
+    // Second query to get paginated entries
+    db.query(dataSql, sqlParams, (err, result) => {
+      if (err) return res.json({ Message: "error inside server" });
+
+      return res.json({
+        data: result,
+        paginationInfo: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalEntries: totalEntries,
+        },
+      });
+    });
+  });
+})
 
 
 app.get("/animelist", (req, res) => {
@@ -43,12 +79,12 @@ app.get("/paginatedanimelist", (req, res) => {
 
   let conditions = [];
 
-  if (status) { // optional query parameter to filter status 
+  if (status && status !== "All") { // optional query parameter to filter status 
     conditions.push(`status = ?`);
     sqlParams.push(status);
   }
 
-  if (type) { // optional query parameter to filter type
+  if (type && type !== "All") { // optional query parameter to filter type
     conditions.push(`type = ?`);
     sqlParams.push(type);
   }
@@ -219,6 +255,6 @@ app.delete("/deleteanime/:id", (req, res) => {
   });
 });
 
-app.listen(8081, () => {
-  console.log("listening");
+app.listen(port, () => {
+  console.log("listening, currently running on port: "+(port));
 });

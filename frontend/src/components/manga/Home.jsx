@@ -84,7 +84,9 @@ function Home() {
 
   return (
     <div>
-      <h1 className="d-flex justify-content-center">Manga Collection</h1>
+      <h1 className="d-flex justify-content-center">
+        Manga Collection Tracker
+      </h1>
       <div className="d-flex justify-content-center  ">
         <Link to="/animeList" className="btn btn-success">
           {" "}

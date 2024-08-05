@@ -22,8 +22,8 @@ function AnimeList() {
   const [open, setOpen] = useState(false);
   const [pageNum, setPageNum] = useState(1);
   const [layout, setLayout] = useState("Cards");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedtype, setSelectedType] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("All");
+  const [selectedtype, setSelectedType] = useState("All");
   const handleClose = () => setOpen(false);
   const handleOpen = (showName, showID) => {
     setAnimeID(showID);
@@ -155,8 +155,12 @@ function AnimeList() {
           <form onSubmit={applyFilter}>
             <button className="btn btn-success"> Apply Filter</button>
             <InputLabel>Status</InputLabel>
-            <Select label="Status" onChange={filterStatus}>
-              <MenuItem value={""}>ALL</MenuItem>
+            <Select
+              value={selectedStatus}
+              label="Status"
+              onChange={filterStatus}
+            >
+              <MenuItem value={"All"}>All</MenuItem>
               <MenuItem value={"Completed"}>Completed</MenuItem>
               <MenuItem value={"Watching"}>Watching</MenuItem>
               <MenuItem value={"Plan to Watch"}>Plan to Watch</MenuItem>
@@ -164,8 +168,8 @@ function AnimeList() {
               <MenuItem value={"Dropped"}>Dropped</MenuItem>
             </Select>
             <InputLabel>Type</InputLabel>
-            <Select onChange={filterType} label="Type">
-              <MenuItem value={""}>ALL</MenuItem>
+            <Select value={selectedtype} onChange={filterType} label="Type">
+              <MenuItem value={"All"}>All</MenuItem>
               <MenuItem value={"TV"}>TV</MenuItem>
               <MenuItem value={"Movie"}>Movie</MenuItem>
               <MenuItem value={"OVA"}>OVA</MenuItem>
