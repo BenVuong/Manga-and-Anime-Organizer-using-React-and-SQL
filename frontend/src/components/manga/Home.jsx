@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 function Home() {
   const [data, setData] = useState([]);
+  const [pageNum, setPageNum] = useState(1);
   const [mangaName, setMangaName] = useState("");
   const [mangaID, setMangaID] = useState();
   const [open, setOpen] = useState(false);

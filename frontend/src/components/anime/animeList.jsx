@@ -1,6 +1,6 @@
 import { AnimeListDisplay } from "./animeListDisplay";
 import { AnimeListCards } from "./animeListCards";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import {
@@ -12,7 +12,7 @@ import {
   InputLabel,
   Button,
 } from "@mui/material";
-
+import { AnimeContext } from "../../helpers/Context";
 function AnimeList() {
   const [data, setData] = useState([]);
   const [pageInfo, setPageInfo] = useState([]);
@@ -20,10 +20,16 @@ function AnimeList() {
   const [arrayOfAnime, setArrayOfAnime] = useState([]);
   const [animeID, setAnimeID] = useState();
   const [open, setOpen] = useState(false);
-  const [pageNum, setPageNum] = useState(1);
+  const {
+    animePageNum,
+    setAnimePageNum,
+    selectedStatus,
+    setSelectedStatus,
+    selectedtype,
+    setSelectedType,
+  } = useContext(AnimeContext);
   const [layout, setLayout] = useState("Cards");
-  const [selectedStatus, setSelectedStatus] = useState("All");
-  const [selectedtype, setSelectedType] = useState("All");
+
   const handleClose = () => setOpen(false);
   const handleOpen = (showName, showID) => {
     setAnimeID(showID);
@@ -31,18 +37,18 @@ function AnimeList() {
     setOpen(true);
   };
   useEffect(() => {
-    getAnimeEntriesPages(pageNum);
-  }, [pageNum]);
+    getAnimeEntriesPages(animePageNum);
+  }, [animePageNum]);
 
   const handleNextPage = () => {
-    if (pageNum < pageInfo.totalPages) {
-      setPageNum((prevPageNum) => prevPageNum + 1);
+    if (animePageNum < pageInfo.totalPages) {
+      setAnimePageNum((prevAnimePageNum) => prevAnimePageNum + 1);
     }
   };
 
   const handlePrevPage = () => {
-    if (pageNum > 1) {
-      setPageNum((prevPageNum) => prevPageNum - 1);
+    if (animePageNum > 1) {
+      setAnimePageNum((prevAnimePageNum) => prevAnimePageNum - 1);
     }
   };
 
@@ -191,7 +197,7 @@ function AnimeList() {
         <Button variant="contained" onClick={handlePrevPage}>
           Prev Page
         </Button>
-        Page: {pageNum} / {pageInfo.totalPages}
+        Page: {animePageNum} / {pageInfo.totalPages}
         <Button variant="contained" onClick={handleNextPage}>
           Next Page
         </Button>
