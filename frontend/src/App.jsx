@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/manga/Home";
 import Create from "./components/manga/Create";
@@ -8,7 +8,7 @@ import AnimeList from "./components/anime/animeList";
 import AnimeDetails from "./components/anime/animeDetails";
 import CreateAnime from "./components/anime/CreateAnime";
 import EditAnime from "./components/anime/EditAnime";
-import { AnimeContext, MangaContext } from "./helpers/Context";
+import { TrackerContext } from "./helpers/Context";
 import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [animePageNum, setAnimePageNum] = useState(1);
@@ -17,7 +17,7 @@ function App() {
   return (
     <BrowserRouter>
       {" "}
-      <AnimeContext.Provider
+      <TrackerContext.Provider
         value={{
           animePageNum,
           setAnimePageNum,
@@ -28,17 +28,16 @@ function App() {
         }}
       >
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/read/:id" element={<Read />} />
-          <Route path="/edit/:id" element={<Edit />} />
-
           <Route path="/animeList" element={<AnimeList />} />
           <Route path="/createanime" element={<CreateAnime />} />
           <Route path="/editanime/:id" element={<EditAnime />} />
           <Route path="/readanime/:id" element={<AnimeDetails />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/read/:id" element={<Read />} />
+          <Route path="/edit/:id" element={<Edit />} />
         </Routes>{" "}
-      </AnimeContext.Provider>
+      </TrackerContext.Provider>
     </BrowserRouter>
   );
 }

@@ -11,8 +11,11 @@ import {
   Select,
   InputLabel,
   Button,
+  Pagination,
+  Stack,
+  Typography,
 } from "@mui/material";
-import { AnimeContext } from "../../helpers/Context";
+import { TrackerContext } from "../../helpers/Context";
 function AnimeList() {
   const [data, setData] = useState([]);
   const [pageInfo, setPageInfo] = useState([]);
@@ -27,7 +30,7 @@ function AnimeList() {
     setSelectedStatus,
     selectedtype,
     setSelectedType,
-  } = useContext(AnimeContext);
+  } = useContext(TrackerContext);
   const [layout, setLayout] = useState("Cards");
 
   const handleClose = () => setOpen(false);
@@ -40,21 +43,14 @@ function AnimeList() {
     getAnimeEntriesPages(animePageNum);
   }, [animePageNum]);
 
-  const handleNextPage = () => {
-    if (animePageNum < pageInfo.totalPages) {
-      setAnimePageNum((prevAnimePageNum) => prevAnimePageNum + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (animePageNum > 1) {
-      setAnimePageNum((prevAnimePageNum) => prevAnimePageNum - 1);
-    }
+  const handlePageChange = (event, value) => {
+    setAnimePageNum(value);
   };
 
   const applyFilter = (event) => {
     event.preventDefault();
     getAnimeEntriesPages(1);
+    setAnimePageNum(1);
   };
   const getAnimeEntriesPages = (num) => {
     axios
@@ -193,14 +189,16 @@ function AnimeList() {
       </Accordion>
       <DisplayLayout />
       <div className="d-flex justify-content-center  ">
-        {" "}
-        <Button variant="contained" onClick={handlePrevPage}>
-          Prev Page
-        </Button>
-        Page: {animePageNum} / {pageInfo.totalPages}
-        <Button variant="contained" onClick={handleNextPage}>
-          Next Page
-        </Button>
+        <Stack spacing={2}>
+          <Typography style={{ textAlign: "center" }}>
+            Page: {animePageNum}
+          </Typography>
+          <Pagination
+            count={pageInfo.totalPages}
+            page={animePageNum}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
     </div>
   );
