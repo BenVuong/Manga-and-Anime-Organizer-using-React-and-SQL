@@ -11,12 +11,16 @@ import {
   Select,
   InputLabel,
   Button,
+  Pagination,
+  Stack,
+  Typography,
 } from "@mui/material";
 function Home() {
   const [data, setData] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [mangaName, setMangaName] = useState("");
   const [mangaID, setMangaID] = useState();
+  const [pageInfo, setPageInfo] = useState([]);
   const [open, setOpen] = useState(false);
   const [layout, setLayout] = useState("Cards");
   const handleClose = () => setOpen(false);
@@ -26,11 +30,8 @@ function Home() {
     setOpen(true);
   };
   useEffect(() => {
-    axios
-      .get("http://localhost:8081/")
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+    getMangaEntriesPages(pageNum);
+  }, [pageNum]);
 
   const handleDelete = (id) => {
     axios
@@ -41,6 +42,26 @@ function Home() {
       .catch((err) => console.log(err));
   };
 
+  const getMangaEntriesPages = (num) => {
+    axios
+      .get("http://localhost:8081/paginatedmangalist", {
+        params: {
+          page: num,
+        },
+      })
+      .then((res) => {
+        setPageInfo(res.data.paginationInfo);
+        console.log(pageInfo);
+
+        setData(res.data.data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handlePageChange = (event, value) => {
+    setPageNum(value);
+  };
   function DisplayLayout() {
     if (layout === "Cards") {
       return (
@@ -106,6 +127,18 @@ function Home() {
         </AccordionDetails>
       </Accordion>
       <DisplayLayout />
+      <div className="d-flex justify-content-center  ">
+        <Stack spacing={2}>
+          <Typography style={{ textAlign: "center" }}>
+            Page: {pageNum}
+          </Typography>
+          <Pagination
+            count={pageInfo.totalPages}
+            page={pageNum}
+            onChange={handlePageChange}
+          />
+        </Stack>
+      </div>
     </div>
   );
 }
