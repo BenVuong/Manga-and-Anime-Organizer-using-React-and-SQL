@@ -12,7 +12,7 @@ const db = mysql.createConnection({
   database: "tracker",
 });
 
-//sql query to get entries of from the book table
+//sql query to get all entries of from the book table
 app.get("/", (req, res) => {
   const sql = "SELECT * FROM book ORDER by name";
   db.query(sql, (err, result) => {
@@ -57,7 +57,7 @@ app.get("/paginatedmangalist", (req,res) =>{
   });
 })
 
-
+//grab all entries from anime mysql table
 app.get("/animelist", (req, res) => {
   const sql = "SELECT * FROM anime";
   db.query(sql, (err, result) => {

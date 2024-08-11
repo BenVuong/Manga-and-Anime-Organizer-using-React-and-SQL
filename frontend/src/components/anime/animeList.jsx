@@ -14,6 +14,7 @@ import {
   Pagination,
   Stack,
   Typography,
+  TextField,
 } from "@mui/material";
 import { TrackerContext } from "../../helpers/Context";
 function AnimeList() {
@@ -105,6 +106,14 @@ function AnimeList() {
     p: 4,
   };
 
+  //TODO Idea: Add a stats and insights page that breaksdow
+  //shows percentage of shows watched
+  //TODO Idea: add genres to anime and manga mysql tables
+  //TODO Idea: Add in CSV export feature
+  //TODO: add and store mal_id to both manga and anime mysql tables
+  //This is so we can retrieve more info of each entries using Jikan API
+  //rather than storing all of the details in the mysql tables
+
   function DisplayLayout() {
     if (layout === "Cards") {
       return (
@@ -152,6 +161,15 @@ function AnimeList() {
       </div>
       total entires: {pageInfo.totalEntries}
       <Accordion>
+        <AccordionSummary>Search</AccordionSummary>
+        <AccordionDetails>
+          <Select>
+            <MenuItem value={"title"}>Title</MenuItem>
+          </Select>
+          <TextField></TextField>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
         <AccordionSummary>Filter</AccordionSummary>
         <AccordionDetails>
           <form onSubmit={applyFilter}>
@@ -183,8 +201,8 @@ function AnimeList() {
       <Accordion>
         <AccordionSummary>Display Layout</AccordionSummary>
         <AccordionDetails>
-          <button onClick={() => setLayout("Cards")}>Cards Layout</button>
-          <button onClick={() => setLayout("List")}>List Layout</button>
+          <Button onClick={() => setLayout("Cards")}>Cards Layout</Button>
+          <Button onClick={() => setLayout("List")}>List Layout</Button>
         </AccordionDetails>
       </Accordion>
       <DisplayLayout />
