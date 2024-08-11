@@ -2,7 +2,7 @@
 Built to track and organize a growing collection of manga and anime.
 Created using React JS for the frontend, Node Js and Express JS as backend and api creation to log enteries to a local MySQL database
 
-https://github.com/BenVuong/Manga-and-Anime-Organizer-using-React-and-SQL/assets/78512101/be8bf625-0bc3-4863-8cd0-0c62409af102
+[![YouTube](http://i.ytimg.com/vi/6Kh37rGb8k8/hqdefault.jpg)](https://www.youtube.com/watch?v=6Kh37rGb8k8)
 
 ## Features
 - Can create new entries of manga / anime and logged into a local MySQL database
