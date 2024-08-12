@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Modal, Typography } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 export function AnimeListDisplay({
   data,
   handleOpen,
@@ -49,7 +50,7 @@ export function AnimeListDisplay({
                       onClick={() => handleOpen(anime.title, anime.id)}
                       className="btn btn-danger"
                     >
-                      {""}
+                      <DeleteIcon></DeleteIcon>
                       Delete
                     </button>
                     <Modal

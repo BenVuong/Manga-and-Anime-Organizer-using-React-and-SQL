@@ -3,6 +3,7 @@ import { AnimeListCards } from "./animeListCards";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import DownloadJSON from "../downloadJSON";
 import {
   Accordion,
   AccordionDetails,
@@ -158,6 +159,7 @@ function AnimeList() {
           {" "}
           Add Anime +
         </Link>
+        <DownloadJSON data={arrayOfAnime} fileName={"animelist"}></DownloadJSON>
       </div>
       total entires: {pageInfo.totalEntries}
       <Accordion>

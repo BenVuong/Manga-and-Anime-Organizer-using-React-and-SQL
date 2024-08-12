@@ -163,7 +163,7 @@ app.post("/book", (req, res) => {
     return res.json(result);
   });
 });
-
+//sql query to insert new entry into the anime table
 app.post("/anime", (req, res) => {
   const sql =
     "INSERT INTO anime (`title`,`episodesWatched`,`episodeCount`,`score`, `synopsis`, `image`, `type`, `status`, `studio`) VALUES (?)";

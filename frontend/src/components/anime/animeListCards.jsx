@@ -9,6 +9,7 @@ import {
   CardContent,
   CardHeader,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 export function AnimeListCards({
   data,
   handleOpen,
@@ -64,7 +65,7 @@ export function AnimeListCards({
                             onClick={() => handleOpen(anime.title, anime.id)}
                             className="btn btn-danger"
                           >
-                            {""}
+                            <DeleteIcon />
                             Delete
                           </button>
                           <Modal
