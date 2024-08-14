@@ -59,7 +59,7 @@ app.get("/paginatedmangalist", (req,res) =>{
 
 //grab all entries from anime mysql table
 app.get("/animelist", (req, res) => {
-  const sql = "SELECT * FROM anime";
+  const sql = "SELECT * FROM anime ORDER by title";
   db.query(sql, (err, result) => {
     if (err) return res.json({ Message: "error inside server" });
     return res.json(result);

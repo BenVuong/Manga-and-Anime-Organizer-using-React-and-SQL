@@ -20,6 +20,7 @@ import {
 import { TrackerContext } from "../../helpers/Context";
 function AnimeList() {
   const [data, setData] = useState([]);
+  const [fullList, setFullList] = useState([]);
   const [pageInfo, setPageInfo] = useState([]);
   const [animeName, setAnimeName] = useState("");
   const [arrayOfAnime, setArrayOfAnime] = useState([]);
@@ -44,6 +45,16 @@ function AnimeList() {
   useEffect(() => {
     getAnimeEntriesPages(animePageNum);
   }, [animePageNum]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/animelist")
+      .then((res) => {
+        setFullList(res.data);
+        console.log(fullList);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handlePageChange = (event, value) => {
     setAnimePageNum(value);
@@ -110,7 +121,7 @@ function AnimeList() {
   //TODO Idea: Add a stats and insights page that breaksdow
   //shows percentage of shows watched
   //TODO Idea: add genres to anime and manga mysql tables
-  //TODO Idea: Add in CSV export feature
+  //TODO Idea: Add in CSV/JSON export and maybe import feature
   //TODO: add and store mal_id to both manga and anime mysql tables
   //This is so we can retrieve more info of each entries using Jikan API
   //rather than storing all of the details in the mysql tables
@@ -159,7 +170,6 @@ function AnimeList() {
           {" "}
           Add Anime +
         </Link>
-        <DownloadJSON data={arrayOfAnime} fileName={"animelist"}></DownloadJSON>
       </div>
       total entires: {pageInfo.totalEntries}
       <Accordion>
@@ -169,6 +179,16 @@ function AnimeList() {
             <MenuItem value={"title"}>Title</MenuItem>
           </Select>
           <TextField></TextField>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary>Import/Export</AccordionSummary>
+        <AccordionDetails>
+          <DownloadJSON
+            data={fullList}
+            fileName={"animelist"}
+            label={"Export Anime Collection as JSON"}
+          ></DownloadJSON>
         </AccordionDetails>
       </Accordion>
       <Accordion>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const DownloadJSON = ({ data, fileName }) => {
+const DownloadJSON = ({ fileName, label, data }) => {
   const downloadJSON = () => {
     const jsonData = new Blob([JSON.stringify(data)], {
       type: "application/json",
@@ -14,7 +14,7 @@ const DownloadJSON = ({ data, fileName }) => {
     document.body.removeChild(link);
   };
 
-  return <button onClick={downloadJSON}>Download collection as JSON</button>;
+  return <button onClick={downloadJSON}>{label}</button>;
 };
 
 export default DownloadJSON;
