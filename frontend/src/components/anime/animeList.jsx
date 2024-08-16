@@ -4,6 +4,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import DownloadJSON from "../downloadJSON";
+import DownloadCSV from "../downloadCSV";
 import {
   Accordion,
   AccordionDetails,
@@ -189,6 +190,11 @@ function AnimeList() {
             fileName={"animelist"}
             label={"Export Anime Collection as JSON"}
           ></DownloadJSON>
+          <DownloadCSV
+            data={fullList}
+            fileName={"animelist"}
+            label={"Export Anime Collection as CSV"}
+          ></DownloadCSV>
         </AccordionDetails>
       </Accordion>
       <Accordion>
