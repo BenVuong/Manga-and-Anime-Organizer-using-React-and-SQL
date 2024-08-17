@@ -15,8 +15,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import DownloadJSON from "../downloadJSON";
+import DownloadCSV from "../downloadCSV";
 function Home() {
   const [data, setData] = useState([]);
+  const [fullList, setFullList] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [mangaName, setMangaName] = useState("");
   const [mangaID, setMangaID] = useState();
@@ -32,6 +35,16 @@ function Home() {
   useEffect(() => {
     getMangaEntriesPages(pageNum);
   }, [pageNum]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/", {})
+      .then((res) => {
+        setFullList(res.data);
+        console.log(fullList);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleDelete = (id) => {
     axios
@@ -119,6 +132,21 @@ function Home() {
           Add Manga +
         </Link>
       </div>
+      <Accordion>
+        <AccordionSummary>Import/Export</AccordionSummary>
+        <AccordionDetails>
+          <DownloadJSON
+            data={fullList}
+            fileName={"mangalist"}
+            label={"Export Manga Collection as JSON"}
+          ></DownloadJSON>
+          <DownloadCSV
+            data={fullList}
+            fileName={"mangalist"}
+            label={"Export Manga Collection as CSV"}
+          ></DownloadCSV>
+        </AccordionDetails>
+      </Accordion>
       <Accordion>
         <AccordionSummary>Display Layout</AccordionSummary>
         <AccordionDetails>
