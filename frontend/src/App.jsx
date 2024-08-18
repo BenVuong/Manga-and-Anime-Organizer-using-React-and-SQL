@@ -14,7 +14,8 @@ function App() {
   const [animePageNum, setAnimePageNum] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [selectedtype, setSelectedType] = useState("All");
-  const [searchStudio, setSearchStudio] = useState("");
+  const [selectedStudio, setSelectedStudio] = useState("");
+  const [selectedTitle, setSelectedTitle] = useState("");
 
   return (
     <BrowserRouter>
@@ -27,6 +28,10 @@ function App() {
           setSelectedStatus,
           selectedtype,
           setSelectedType,
+          selectedStudio,
+          setSelectedStudio,
+          selectedTitle,
+          setSelectedTitle,
         }}
       >
         <Routes>

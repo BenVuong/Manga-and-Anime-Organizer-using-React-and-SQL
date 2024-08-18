@@ -1,5 +1,5 @@
 import React from "react";
-
+import DownloadIcon from "@mui/icons-material/Download";
 const DownloadCSV = ({ data, fileName, label }) => {
   const convertToCSV = (objArray) => {
     const array =
@@ -41,7 +41,10 @@ const DownloadCSV = ({ data, fileName, label }) => {
 
   return (
     <div>
-      <button onClick={handleDownload}>{label}</button>
+      <button onClick={handleDownload}>
+        {label}
+        <DownloadIcon></DownloadIcon>
+      </button>
     </div>
   );
 };

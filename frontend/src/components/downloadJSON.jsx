@@ -1,4 +1,5 @@
 import React from "react";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const DownloadJSON = ({ fileName, label, data }) => {
   const downloadJSON = () => {
@@ -14,7 +15,12 @@ const DownloadJSON = ({ fileName, label, data }) => {
     document.body.removeChild(link);
   };
 
-  return <button onClick={downloadJSON}>{label}</button>;
+  return (
+    <button onClick={downloadJSON}>
+      {label}
+      <DownloadIcon></DownloadIcon>
+    </button>
+  );
 };
 
 export default DownloadJSON;

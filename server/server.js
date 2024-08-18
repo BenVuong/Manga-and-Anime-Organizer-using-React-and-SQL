@@ -72,6 +72,8 @@ app.get("/paginatedanimelist", (req, res) => {
   const offset = (page - 1) * limit;
   const status = req.query.status;
   const type = req.query.type;
+  const title = req.query.title;
+  const studio = req.query.studio;
 
   let countSql = "SELECT COUNT(*) AS total FROM anime";
   let dataSql = "SELECT * FROM anime";
@@ -87,6 +89,16 @@ app.get("/paginatedanimelist", (req, res) => {
   if (type && type !== "All") { // optional query parameter to filter type
     conditions.push(`type = ?`);
     sqlParams.push(type);
+  }
+
+  if (title && title !== "") { // optional query parameter to filter title
+    conditions.push(`title = ?`);
+    sqlParams.push(title);
+  }
+
+  if (studio && studio !== "") { // optional query parameter to filter studio
+    conditions.push(`studio = ?`);
+    sqlParams.push(studio);
   }
 
   if (conditions.length > 0) {

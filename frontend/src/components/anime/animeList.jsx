@@ -34,6 +34,10 @@ function AnimeList() {
     setSelectedStatus,
     selectedtype,
     setSelectedType,
+    selectedStudio,
+    setSelectedStudio,
+    selectedTitle,
+    setSelectedTitle,
   } = useContext(TrackerContext);
   const [layout, setLayout] = useState("Cards");
 
@@ -73,18 +77,15 @@ function AnimeList() {
           page: num,
           status: selectedStatus,
           type: selectedtype,
+          title: selectedTitle,
+          studio: selectedStudio,
         },
       })
       .then((res) => {
         setPageInfo(res.data.paginationInfo);
         console.log(pageInfo);
-        const sortedData = res.data.data.sort((a, b) =>
-          a.title > b.title ? 1 : -1
-        );
 
-        setData(sortedData);
-        setArrayOfAnime(sortedData);
-        console.log(sortedData);
+        setArrayOfAnime(res.data.data);
       })
       .catch((err) => console.log(err));
   };
@@ -119,10 +120,10 @@ function AnimeList() {
     p: 4,
   };
 
-  //TODO Idea: Add a stats and insights page that breaksdow
+  //TODO Idea: Add a stats and insights page that breaksdown
   //shows percentage of shows watched
   //TODO Idea: add genres to anime and manga mysql tables
-  //TODO Idea: Add in CSV/JSON export and maybe import feature
+  //TODO Idea: Add in CSV/JSON import feature
   //TODO: add and store mal_id to both manga and anime mysql tables
   //This is so we can retrieve more info of each entries using Jikan API
   //rather than storing all of the details in the mysql tables
@@ -174,15 +175,6 @@ function AnimeList() {
       </div>
       total entires: {pageInfo.totalEntries}
       <Accordion>
-        <AccordionSummary>Search</AccordionSummary>
-        <AccordionDetails>
-          <Select>
-            <MenuItem value={"title"}>Title</MenuItem>
-          </Select>
-          <TextField></TextField>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
         <AccordionSummary>Import/Export</AccordionSummary>
         <AccordionDetails>
           <DownloadJSON
@@ -202,6 +194,7 @@ function AnimeList() {
         <AccordionDetails>
           <form onSubmit={applyFilter}>
             <button className="btn btn-success"> Apply Filter</button>
+
             <InputLabel>Status</InputLabel>
             <Select
               value={selectedStatus}
@@ -223,6 +216,20 @@ function AnimeList() {
               <MenuItem value={"OVA"}>OVA</MenuItem>
               <MenuItem value={"ONA"}>ONA</MenuItem>
             </Select>
+            <TextField
+              id="outlined-basic"
+              InputLabelProps={{ shrink: true }}
+              label="Title"
+              value={selectedTitle}
+              onChange={(e) => setSelectedTitle(e.target.value)}
+            ></TextField>
+            <TextField
+              id="outlined-basic"
+              InputLabelProps={{ shrink: true }}
+              label="Studio"
+              value={selectedStudio}
+              onChange={(e) => setSelectedStudio(e.target.value)}
+            ></TextField>
           </form>
         </AccordionDetails>
       </Accordion>

@@ -150,8 +150,12 @@ function Home() {
       <Accordion>
         <AccordionSummary>Display Layout</AccordionSummary>
         <AccordionDetails>
-          <button onClick={() => setLayout("Cards")}>Cards Layout</button>
-          <button onClick={() => setLayout("List")}>List Layout</button>
+          <Button variant="contained" onClick={() => setLayout("Cards")}>
+            Cards Layout
+          </Button>
+          <Button variant="contained" onClick={() => setLayout("List")}>
+            List Layout
+          </Button>
         </AccordionDetails>
       </Accordion>
       <DisplayLayout />
